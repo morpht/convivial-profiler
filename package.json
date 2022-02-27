@@ -1,0 +1,35 @@
+{
+  "name": "convivial-profiler",
+  "version": "1.0.0",
+  "description": "Provides ability for personalization and visitor data collection.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --config webpack.config.js --mode development",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [],
+  "author": "Morpht <murray@morpht.com> (https://www.morpht.com)",
+  "license": "UNLICENSED",
+  "private": true,
+  "directories": {
+    "example": "example"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morpht/convivial-profiler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/morpht/convivial-profiler/issues"
+  },
+  "homepage": "https://github.com/morpht/convivial-profiler#readme"
+}
