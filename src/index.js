@@ -6,7 +6,7 @@
  */
 
 import accumulation from './processor_handler/accumulation';
-import current from './processor_handler/current';
+import store from './processor_handler/store';
 import data_layer from './processor_handler/datalayer_event';
 import dimension from './processor_handler/dimension';
 import extreme_geoip from './processor_handler/extreme_geoip';
@@ -100,12 +100,12 @@ import time from './processor_source/time';
       });
 
       // Clear expired values.
-      if (this._getValue('currents') !== undefined) {
-        for (var key in this.storage.currents) {
-          if (this.storage.currents.hasOwnProperty(key)
-              && this.storage.currents[key].expire < now
+      if (this._getValue('store') !== undefined) {
+        for (var key in this.storage.store) {
+          if (this.storage.store.hasOwnProperty(key)
+              && this.storage.store[key].expire < now
           ) {
-            delete this.storage.currents[key];
+            delete this.storage.store[key];
           }
         }
         this._saveStorage();
@@ -176,6 +176,12 @@ import time from './processor_source/time';
           localStorage.setItem('convivial_profiler', basil);
           localStorage.removeItem('basil');
         }
+      }
+      // @deprecated For backward compatibility, rename currents storage if found.
+      if (Object.keys(storage).length > 0 && storage[this.siteId] !== null && storage[this.siteId].currents !== null) {
+        storage[this.siteId].store = storage[this.siteId].currents;
+        delete storage[this.siteId].currents;
+        localStorage.setItem('convivial_profiler', JSON.stringify(storage));
       }
       // Clear all stored values if client ID was changed.
       if (this._getConfig('prepare.client_cleanup') === true
