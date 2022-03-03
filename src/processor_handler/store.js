@@ -8,11 +8,15 @@
 (function (window) {
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.processorHandler = window.convivialProfiler.processorHandler || {};
-  window.convivialProfiler.processorHandler.current = function (processor, handler, values) {
+  window.convivialProfiler.processorHandler.store = function (processor, handler, values) {
+    var expire = window.convivialProfiler._getTime() + handler.ttl;
+    if (handler.ttl !== null && handler.ttl > 0) {
+      expire = window.convivialProfiler._getTime() - 1;
+    }
     values.forEach(value => {
-      window.convivialProfiler._setValue('currents', handler.key, {
+      window.convivialProfiler._setValue('store', handler.key, {
         value: value,
-        expire: window.convivialProfiler._getTime() + handler.ttl,
+        expire: expire,
       });
     });
   }
