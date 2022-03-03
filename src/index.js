@@ -22,6 +22,7 @@ import get from './processor_source/get';
 import meta from './processor_source/meta';
 import query from './processor_source/query';
 import time from './processor_source/time';
+import useragent from './processor_source/useragent';
 
  class ConvivialProfiler {
 
