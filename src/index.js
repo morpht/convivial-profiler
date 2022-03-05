@@ -12,6 +12,7 @@ import dimension from './processor_handler/dimension';
 import extreme_geoip from './processor_handler/extreme_geoip';
 import copy from './processor_publisher/copy';
 import range from './processor_publisher/range';
+import remove from './processor_publisher/remove';
 import season from './processor_publisher/season';
 import set from './processor_publisher/set';
 import threshold from './processor_publisher/threshold';

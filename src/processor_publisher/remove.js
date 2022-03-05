@@ -8,15 +8,16 @@
 (function (window, localStorage) {
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.processorPublisher = window.convivialProfiler.processorPublisher || {};
-  window.convivialProfiler.processorPublisher.unset = function (publisher, values) {
+  window.convivialProfiler.processorPublisher.remove = function (publisher, values) {
     values.forEach(value => {
-      // Unset the value in localstorage if its applicable.
+      localStorage.removeItem(value);
+      // Remove the value from localstorage if its applicable.
       if (publisher.storage.localstorage === 'localstorage') {
-        localStorage.setItem(value, '0');
+        localStorage.removeItem(value);
       }
-      // Unset the value in cookie if its applicable.
+      // Remove the value from cookie if its applicable.
       if (publisher.storage.cookie === 'cookie') {
-        window.convivialProfiler._setCookie(value, '0');
+        window.convivialProfiler._setCookie(value, '', 0);
       }
     });
   }
