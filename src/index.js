@@ -6,10 +6,10 @@
  */
 
 import accumulation from './processor_handler/accumulation';
-import store from './processor_handler/store';
 import data_layer from './processor_handler/datalayer_event';
 import dimension from './processor_handler/dimension';
 import extreme_geoip from './processor_handler/extreme_geoip';
+import store from './processor_handler/store';
 import copy from './processor_publisher/copy';
 import range from './processor_publisher/range';
 import remove from './processor_publisher/remove';
@@ -18,6 +18,8 @@ import set from './processor_publisher/set';
 import threshold from './processor_publisher/threshold';
 import top from './processor_publisher/top';
 import unset from './processor_publisher/unset';
+import acceptlangfull from './processor_source/acceptlangfull';
+import acceptlangsimple from './processor_source/acceptlangsimple';
 import cookie from './processor_source/cookie';
 import get from './processor_source/get';
 import meta from './processor_source/meta';
