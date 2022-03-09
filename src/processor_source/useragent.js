@@ -13,7 +13,7 @@
       values.push("mobile");
     }
     else {
-      values.push("browser");
+      values.push("desktop");
     }
   }
 })(window, document);
