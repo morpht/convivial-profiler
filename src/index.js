@@ -9,6 +9,7 @@ import accumulation from './processor_handler/accumulation';
 import data_layer from './processor_handler/datalayer_event';
 import dimension from './processor_handler/dimension';
 import extreme_geoip from './processor_handler/extreme_geoip';
+import pageview from './processor_handler/pageview';
 import store from './processor_handler/store';
 import copy from './processor_publisher/copy';
 import range from './processor_publisher/range';
@@ -41,10 +42,6 @@ import useragent from './processor_source/useragent';
       this.processorSource = window.convivialProfiler.processorSource || {};
       this.processorHandler = window.convivialProfiler.processorHandler || {};
       this.processorPublisher = window.convivialProfiler.processorPublisher || {};
-
-      if (this._getConfig('trackers.pageview') !== undefined) {
-        this.track('pageview', window.location.href);
-      }
     }
 
     getClientId() {
@@ -71,11 +68,6 @@ import useragent from './processor_source/useragent';
     track(event, subject) {
       this._increaseValue('counters', event);
       this._logValue(event, subject);
-      // Process attached publishers.
-      var publishers = this._getConfig('trackers.' + event + '.publishers');
-      if (publishers !== undefined) {
-        this._publish(publishers);
-      }
     }
 
     collect() {
@@ -113,16 +105,6 @@ import useragent from './processor_source/useragent';
           }
         }
         this._saveStorage();
-      }
-    }
-
-    render() {
-      var render = this._getConfig('render');
-      if (render !== undefined) {
-        var element = document.querySelector(render.selector);
-        if (element) {
-          element.innerHTML = render.privacy;
-        }
       }
     }
 
@@ -188,7 +170,7 @@ import useragent from './processor_source/useragent';
         localStorage.setItem('convivial_profiler', JSON.stringify(storage));
       }
       // Clear all stored values if client ID was changed.
-      if (this._getConfig('prepare.client_cleanup') === true
+      if (this._getConfig('client_cleanup') === true
           && storage._clientId !== this.clientId
       ) {
         localStorage.removeItem('convivial_profiler');
