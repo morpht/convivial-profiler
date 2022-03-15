@@ -13,6 +13,7 @@ import language_simple from './processor_handler/language_simple';
 import language_full from './processor_handler/language_full';
 import pageview from './processor_handler/pageview';
 import store from './processor_handler/store';
+import bestpick from './processor_publisher/bestpick';
 import copy from './processor_publisher/copy';
 import range from './processor_publisher/range';
 import remove from './processor_publisher/remove';
@@ -134,7 +135,11 @@ import useragent from './processor_source/useragent';
         var values = [];
         publisher.key = name;
         publisher.paths.forEach(path => {
-          var value = this._getValue(path);
+          if (publisher.localstorage && publisher.localstorage !== undefined) {
+            var value = localStorage.getItem(path);
+          } else {
+            var value = this._getValue(path);
+          }
           if (value !== undefined) {
             values.push(value);
           }
