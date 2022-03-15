@@ -8,7 +8,7 @@
 (function (window, document) {
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.acceptlangfull = function (processor, source, values) {
+  window.convivialProfiler.processorSource.acceptlang = function (processor, source, values) {
     if (navigator.language !== null && navigator.language.includes("-")) {
       values.push(navigator.language);
     }
