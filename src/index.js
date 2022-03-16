@@ -135,13 +135,16 @@ import useragent from './processor_source/useragent';
         var values = [];
         publisher.key = name;
         publisher.paths.forEach(path => {
-          if (publisher.localstorage && publisher.localstorage !== undefined) {
+          if (publisher.global_storage && publisher.global_storage !== undefined && localStorage.getItem(path) !== null) {
             var value = localStorage.getItem(path);
           } else {
             var value = this._getValue(path);
           }
           if (value !== undefined) {
             values.push(value);
+          }
+          else if (publisher.default_value && publisher.default_value !== undefined) {
+            values.push(publisher.default_value);
           }
         });
         if (values.length) {
