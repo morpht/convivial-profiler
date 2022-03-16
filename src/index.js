@@ -135,7 +135,7 @@ import useragent from './processor_source/useragent';
         var values = [];
         publisher.key = name;
         publisher.paths.forEach(path => {
-          if (publisher.localstorage && publisher.localstorage !== undefined) {
+          if (publisher.global_storage && publisher.global_storage !== undefined) {
             var value = localStorage.getItem(path);
           } else {
             var value = this._getValue(path);
