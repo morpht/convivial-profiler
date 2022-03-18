@@ -10,7 +10,7 @@
 	window.convivialProfiler.processorPublisher = window.convivialProfiler.processorPublisher || {};
 	window.convivialProfiler.processorPublisher.threshold = function (publisher, values) {
 		// If the value is greater than the threshold number, then publish it.
-		if (values[0] > publisher.threshold_number) {
+		if (values[0] >= publisher.threshold_number) {
 			// Store the value in localstorage if its applicable.
 			if (publisher.storage.localstorage === 'localstorage') {
 				localStorage.setItem(publisher.storage_key, publisher.storage_value);
