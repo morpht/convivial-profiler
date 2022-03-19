@@ -15,11 +15,11 @@
       values.push(publisher.default_value);
     }
     // Store the value in localstorage if its applicable.
-    if (publisher.storage.localstorage === 'localstorage') {
+    if (publisher.storage.localstorage === 'localstorage' && values[0]) {
       localStorage.setItem(publisher.key, values[0]);
     }
     // Store the value in cookie if its applicable.
-    if (publisher.storage.cookie === 'cookie') {
+    if (publisher.storage.cookie === 'cookie' && values[0]) {
       window.convivialProfiler._setCookie(publisher.key, values[0]);
     }
   }
