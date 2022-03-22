@@ -9,6 +9,16 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.processorPublisher = window.convivialProfiler.processorPublisher || {};
   window.convivialProfiler.processorPublisher.remove = function (publisher, values) {
+    // Remove empty and null values.
+    values = values.filter(el => {return el != null && el != '';});
+    // Process the static values.
+    if (Array.isArray(values) && publisher.static_values && publisher.static_values !== undefined) {
+      publisher.static_values.forEach(static_value => {
+        if (static_value !== undefined) {
+          values.push(static_value);
+        }
+      });
+    }
     values.forEach(value => {
       localStorage.removeItem(value);
       // Remove the value from localstorage if its applicable.
