@@ -10,7 +10,8 @@
   window.convivialProfiler.processorHandler = window.convivialProfiler.processorHandler || {};
   window.convivialProfiler.processorHandler.store = function (processor, handler, values) {
     var expire = window.convivialProfiler._getTime() + handler.ttl;
-    if (handler.ttl !== null && handler.ttl > 0) {
+    // Store values permanently.
+    if (handler.ttl !== null && handler.ttl < 1) {
       expire = window.convivialProfiler._getTime() - 1;
     }
     values.forEach(value => {
