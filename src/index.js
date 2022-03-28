@@ -15,6 +15,7 @@ import pageview from './processor_handler/pageview';
 import store from './processor_handler/store';
 import bestpick from './processor_publisher/bestpick';
 import copy from './processor_publisher/copy';
+import formfiller from './processor_publisher/formfiller';
 import range from './processor_publisher/range';
 import remove from './processor_publisher/remove';
 import season from './processor_publisher/season';
