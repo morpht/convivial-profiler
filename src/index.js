@@ -145,6 +145,11 @@ import useragent from './processor_source/useragent';
             values.push(value);
           }
         });
+        // Remove empty and null values and add default value.
+        values = values.filter(el => {return el != null && el != '';});
+        if (Array.isArray(values) && values.length === 0 && publisher.default_value && publisher.default_value !== undefined) {
+          values.push(publisher.default_value);
+        }
         if (values.length) {
           if (this.processorPublisher[publisher.type] !== undefined) {
             this.processorPublisher[publisher.type](publisher, values);
