@@ -16,6 +16,7 @@ import store from './processor_handler/store';
 import bestpick from './processor_publisher/bestpick';
 import copy from './processor_publisher/copy';
 import formfiller from './processor_publisher/formfiller';
+import officehours from './processor_publisher/officehours';
 import range from './processor_publisher/range';
 import remove from './processor_publisher/remove';
 import season from './processor_publisher/season';
@@ -166,21 +167,6 @@ import useragent from './processor_source/useragent';
 
     _loadStorage() {
       var storage = JSON.parse(localStorage.getItem('convivial_profiler')) || {};
-      // @deprecated For backward compatibility, rename Basil storage if found.
-      if (!Object.keys(storage).length) {
-        var basil = localStorage.getItem('basil');
-        if (basil !== null) {
-          storage = JSON.parse(basil) || {};
-          localStorage.setItem('convivial_profiler', basil);
-          localStorage.removeItem('basil');
-        }
-      }
-      // @deprecated For backward compatibility, rename currents storage if found.
-      if (Object.keys(storage).length > 0 && storage[this.siteId] !== null && storage[this.siteId].currents !== null) {
-        storage[this.siteId].store = storage[this.siteId].currents;
-        delete storage[this.siteId].currents;
-        localStorage.setItem('convivial_profiler', JSON.stringify(storage));
-      }
       // Clear all stored values if client ID was changed.
       if (this._getConfig('client_cleanup') === true
           && storage._clientId !== this.clientId
