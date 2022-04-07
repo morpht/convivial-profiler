@@ -20,7 +20,6 @@
       });
     }
     values.forEach(value => {
-      localStorage.removeItem(value);
       // Remove the value from localstorage if its applicable.
       if (publisher.storage.localstorage === 'localstorage') {
         localStorage.removeItem(value);
