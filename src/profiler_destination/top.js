@@ -1,14 +1,14 @@
 /**
  * @file
- * Convivial Profiler library publisher plugin.
+ * Convivial Profiler library destination plugin.
  *
  * Copyright Morpht Pty Ltd 2020-2022.
  */
 
 (function (window, localStorage) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorPublisher = window.convivialProfiler.processorPublisher || {};
-  window.convivialProfiler.processorPublisher.top = function (publisher, values) {
+  window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
+  window.convivialProfiler.profilerDestination.top = function (profiler, destination, sourceValues, values) {
     var topKey = null;
     var topValue = null;
     values.forEach(value => {
@@ -22,12 +22,12 @@
       }
     });
     // Store the value in localstorage if its applicable.
-    if (publisher.storage.localstorage === 'localstorage') {
-      localStorage.setItem(publisher.key, topKey);
+    if (destination.storage.localstorage === 'localstorage') {
+      localStorage.setItem(destination.key, topKey);
     }
     // Store the value in cookie if its applicable.
-    if (publisher.storage.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(publisher.key, topKey);
+    if (destination.storage.cookie === 'cookie') {
+      window.convivialProfiler._setCookie(destination.key, topKey);
     }   
   }
 })(window, localStorage);

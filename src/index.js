@@ -5,32 +5,32 @@
  * Copyright Morpht Pty Ltd 2020-2022.
  */
 
-import accumulation from './processor_handler/accumulation';
-import data_layer from './processor_handler/datalayer_event';
-import dimension from './processor_handler/dimension';
-import extreme_geoip from './processor_handler/extreme_geoip';
-import language_simple from './processor_handler/language_simple';
-import language_full from './processor_handler/language_full';
-import pageview from './processor_handler/pageview';
-import store from './processor_handler/store';
-import bestpick from './processor_publisher/bestpick';
-import copy from './processor_publisher/copy';
-import formfiller from './processor_publisher/formfiller';
-import officehours from './processor_publisher/officehours';
-import range from './processor_publisher/range';
-import remove from './processor_publisher/remove';
-import season from './processor_publisher/season';
-import set from './processor_publisher/set';
-import threshold from './processor_publisher/threshold';
-import top from './processor_publisher/top';
-import unset from './processor_publisher/unset';
-import acceptlang from './processor_source/acceptlang';
-import cookie from './processor_source/cookie';
-import get from './processor_source/get';
-import meta from './processor_source/meta';
-import query from './processor_source/query';
-import time from './processor_source/time';
-import useragent from './processor_source/useragent';
+import accumulation from './profiler_process/accumulation';
+import dimension from './profiler_process/dimension';
+import extreme_geoip from './profiler_process/extreme_geoip';
+import language_simple from './profiler_process/language_simple';
+import language_full from './profiler_process/language_full';
+import pageview from './profiler_process/pageview';
+import store from './profiler_process/store';
+import bestpick from './profiler_destination/bestpick';
+import copy from './profiler_destination/copy';
+import datalayer_event from './profiler_destination/datalayer_event';
+import formfiller from './profiler_destination/formfiller';
+import officehours from './profiler_destination/officehours';
+import range from './profiler_destination/range';
+import remove from './profiler_destination/remove';
+import season from './profiler_destination/season';
+import set from './profiler_destination/set';
+import threshold from './profiler_destination/threshold';
+import top from './profiler_destination/top';
+import unset from './profiler_destination/unset';
+import acceptlang from './profiler_source/acceptlang';
+import cookie from './profiler_source/cookie';
+import get from './profiler_source/get';
+import meta from './profiler_source/meta';
+import query from './profiler_source/query';
+import time from './profiler_source/time';
+import httpuseragent from './profiler_source/httpuseragent';
 
  class ConvivialProfiler {
 
@@ -43,21 +43,14 @@ import useragent from './processor_source/useragent';
       this.storage = this._loadStorage();
 
       window.convivialProfiler = window.convivialProfiler || {};
-      this.processorSource = window.convivialProfiler.processorSource || {};
-      this.processorHandler = window.convivialProfiler.processorHandler || {};
-      this.processorPublisher = window.convivialProfiler.processorPublisher || {};
+      this.profilerSource = window.convivialProfiler.profilerSource || {};
+      this.profilerProcess = window.convivialProfiler.profilerProcess || {};
+      this.profilerDestination = window.convivialProfiler.profilerDestination || {};
     }
 
     getClientId() {
       var value = this._getCookie('ConvivialProfilerClientId');
       if (value === null) {
-        // @deprecated For backward compatibility, rename Basil cookie if found.
-        value = this._getCookie('BasilClientId');
-        if (value !== null) {
-          this._setCookie('ConvivialProfilerClientId', value, 365);
-          this._setCookie('BasilClientId', '', 0);
-          return value;
-        }
         var arr = new Uint8Array(10);
         (window.crypto || window.msCrypto).getRandomValues(arr);
         value = '';
@@ -76,10 +69,10 @@ import useragent from './processor_source/useragent';
 
     collect() {
       var now = this._getTime();
-      Object.keys(this.config.processors).forEach(name => {
-        var processor = this.config.processors[name];
-        // Skip not expired deferred processors.
-        if (processor.deferred) {
+      Object.keys(this.config.profilers).forEach(name => {
+        var profiler = this.config.profilers[name];
+        // Skip not expired deferred profilers.
+        if (profiler.deferred) {
           var current = this._getValue('fetchers.' + name);
           if (current !== undefined && current.expire > now) {
             return;
@@ -87,16 +80,18 @@ import useragent from './processor_source/useragent';
         }
         // Extract values from all sources.
         var values = [];
-        processor.sources.forEach(source => {
-          if (this.processorSource[source.type] !== undefined) {
-            this.processorSource[source.type](processor, source, values);
+        profiler.sources.forEach(source => {
+          if (this.profilerSource[source.type] !== undefined) {
+            this.profilerSource[source.type](profiler, source, values);
           }
           else {
-            console.debug('Invalid processor source type "' + source.type + '".');
+            console.debug('Invalid profiler source type "' + source.type + '".');
           }
         });
-        // Process attached handlers and publishers.
-        this._processValues(processor, values);
+        // Call all attached processes.
+        this._processValues(profiler, values);
+        // Call all attached destinations.
+        this._destinationValues(profiler, values);
       });
 
       // Clear expired values.
@@ -112,55 +107,47 @@ import useragent from './processor_source/useragent';
       }
     }
 
-    _processValues(processor, values) {
-      // Process attached handlers.
-      processor.handlers.forEach(handler => {
-        if (this.processorHandler[handler.type] !== undefined) {
-          this.processorHandler[handler.type](processor, handler, values);
+    _processValues(profiler, values) {
+      // Process attached processes.
+      profiler.processes.forEach(process => {
+        if (this.profilerProcess[process.type] !== undefined) {
+          this.profilerProcess[process.type](profiler, process, values);
         }
         else {
-          console.debug('Invalid processor handler type "' + handler.type + '".');
+          console.debug('Invalid profiler process type "' + process.type + '".');
         }
       });
-      // Process attached publishers.
-      if (processor.publishers) {
-        this._publish(processor.publishers);
-      }
     }
 
-    _publish(publishers) {
-      publishers.forEach(name => {
-        var publisher = this._getConfig('publishers.' + name);
-        if (publisher === undefined) {
-          return;
-        }
-        var values = [];
-        publisher.key = name;
-        publisher.paths.forEach(path => {
-          if (publisher.global_storage && publisher.global_storage !== undefined) {
-            var value = localStorage.getItem(path);
-          } else {
-            var value = this._getValue(path);
+    _destinationValues(profiler, sourceValues) {
+      // Process attached destinations.
+      profiler.destinations.forEach(destination => {
+        if (this.profilerDestination[destination.type] !== undefined) {
+          var values = [];
+          destination.paths.forEach(path => {
+            if (destination.global_storage && destination.global_storage !== undefined) {
+              var value = localStorage.getItem(path);
+            } else {
+              var value = this._getValue(path);
+            }
+            if (value !== undefined) {
+              values.push(value);
+            }
+          });
+          // Remove empty and null values and add default value.
+          values = values.filter(el => {return el != null && el != '';});
+          if (Array.isArray(values) && values.length === 0 && destination.default_value && destination.default_value !== undefined) {
+            values.push(destination.default_value);
           }
-          if (value !== undefined) {
-            values.push(value);
+          if (values.length) {
+            this.profilerDestination[destination.type](profiler, destination, sourceValues, values);
           }
-        });
-        // Remove empty and null values and add default value.
-        values = values.filter(el => {return el != null && el != '';});
-        if (Array.isArray(values) && values.length === 0 && publisher.default_value && publisher.default_value !== undefined) {
-          values.push(publisher.default_value);
-        }
-        if (values.length) {
-          if (this.processorPublisher[publisher.type] !== undefined) {
-            this.processorPublisher[publisher.type](publisher, values);
-          }
-          else {
-            console.debug('Invalid processor publisher type "' + publisher.type + '".');
+          else if (destination.remove_empty && !values.length) {
+            localStorage.removeItem(destination.key);
           }
         }
-        else if (publisher.remove_empty) {
-          localStorage.removeItem(publisher.key);
+        else {
+          console.debug('Invalid profiler destination type "' + destination.type + '".');
         }
       });
     }

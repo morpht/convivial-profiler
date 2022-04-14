@@ -7,13 +7,13 @@
 
 (function (window, XMLHttpRequest, console) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.get = function (processor, source, values) {
+  window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
+  window.convivialProfiler.profilerSource.get = function (profiler, source, values) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
       try {
         values.push(JSON.parse(xhr.response));
-        window.convivialProfiler._processValues(processor, values);
+        window.convivialProfiler._processValues(profiler, values);
       }
       catch (e) {
         xhr.onerror();

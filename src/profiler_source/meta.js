@@ -7,8 +7,8 @@
 
 (function (window, document) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.meta = function (processor, source, values) {
+  window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
+  window.convivialProfiler.profilerSource.meta = function (profiler, source, values) {
     var elements = document.querySelectorAll('meta[name="' + source.key + '"]');
     for (var element of elements) {
       values.push(element.getAttribute('content'));

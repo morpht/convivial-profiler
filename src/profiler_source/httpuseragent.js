@@ -7,8 +7,8 @@
 
  (function (window, document) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.useragent = function (processor, source, values) {
+  window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
+  window.convivialProfiler.profilerSource.httpuseragent = function (profiler, source, values) {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       values.push("mobile");
     }

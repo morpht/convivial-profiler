@@ -7,8 +7,8 @@
 
 (function (window) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.time = function (processor, source, values) {
+  window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
+  window.convivialProfiler.profilerSource.time = function (profiler, source, values) {
     if (source.key === 'hour') {
       values.push(new Date().getHours());
     }
