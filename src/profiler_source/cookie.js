@@ -7,8 +7,8 @@
 
 (function (window) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.cookie = function (processor, source, values) {
+  window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
+  window.convivialProfiler.profilerSource.cookie = function (profiler, source, values) {
     var value = window.convivialProfiler._getCookie(source.key);
     if (value !== null) {
       values.push(value);

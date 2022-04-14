@@ -7,8 +7,8 @@
 
 (function (window) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.processorSource = window.convivialProfiler.processorSource || {};
-  window.convivialProfiler.processorSource.query = function (processor, source, values) {
+  window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
+  window.convivialProfiler.profilerSource.query = function (profiler, source, values) {
     window.location.search.substring(1).split('&').forEach(param => {
       var parts = param.split('=');
       if (parts[0] === source.key || parts[0] === source.key + '[]') {
