@@ -5,14 +5,14 @@
  * Copyright Morpht Pty Ltd 2020-2022.
  */
 
-import accumulation from './profiler_process/accumulation';
-import dimension from './profiler_process/dimension';
-import extreme_geoip from './profiler_process/extreme_geoip';
-import language_simple from './profiler_process/language_simple';
-import language_full from './profiler_process/language_full';
-import pageview from './profiler_process/pageview';
-import searchquery from './profiler_process/searchquery';
-import store from './profiler_process/store';
+import accumulation from './profiler_processor/accumulation';
+import dimension from './profiler_processor/dimension';
+import extreme_geoip from './profiler_processor/extreme_geoip';
+import language_simple from './profiler_processor/language_simple';
+import language_full from './profiler_processor/language_full';
+import pageview from './profiler_processor/pageview';
+import searchquery from './profiler_processor/searchquery';
+import store from './profiler_processor/store';
 import bestpick from './profiler_destination/bestpick';
 import copy from './profiler_destination/copy';
 import datalayer_event from './profiler_destination/datalayer_event';
@@ -45,7 +45,7 @@ import httpuseragent from './profiler_source/httpuseragent';
 
       window.convivialProfiler = window.convivialProfiler || {};
       this.profilerSource = window.convivialProfiler.profilerSource || {};
-      this.profilerProcess = window.convivialProfiler.profilerProcess || {};
+      this.profilerProcessor = window.convivialProfiler.profilerProcessor || {};
       this.profilerDestination = window.convivialProfiler.profilerDestination || {};
     }
 
@@ -89,7 +89,7 @@ import httpuseragent from './profiler_source/httpuseragent';
             console.debug('Invalid profiler source type "' + source.type + '".');
           }
         });
-        // Call all attached processes.
+        // Call all attached processors.
         this._processValues(profiler, values);
         // Call all attached destinations.
         this._destinationValues(profiler, values);
@@ -109,13 +109,13 @@ import httpuseragent from './profiler_source/httpuseragent';
     }
 
     _processValues(profiler, values) {
-      // Process attached processes.
-      profiler.processes.forEach(process => {
-        if (this.profilerProcess[process.type] !== undefined) {
-          this.profilerProcess[process.type](profiler, process, values);
+      // Process attached processors.
+      profiler.processors.forEach(processor => {
+        if (this.profilerProcessor[processor.type] !== undefined) {
+          this.profilerProcessor[processor.type](profiler, processor, values);
         }
         else {
-          console.debug('Invalid profiler process type "' + process.type + '".');
+          console.debug('Invalid profiler processor type "' + processor.type + '".');
         }
       });
     }
