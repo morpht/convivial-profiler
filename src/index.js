@@ -11,6 +11,7 @@ import extreme_geoip from './profiler_process/extreme_geoip';
 import language_simple from './profiler_process/language_simple';
 import language_full from './profiler_process/language_full';
 import pageview from './profiler_process/pageview';
+import searchquery from './profiler_process/searchquery';
 import store from './profiler_process/store';
 import bestpick from './profiler_destination/bestpick';
 import copy from './profiler_destination/copy';
@@ -64,7 +65,7 @@ import httpuseragent from './profiler_source/httpuseragent';
 
     track(event, subject) {
       this._increaseValue('counters', event);
-      this._logValue(event, subject);
+      this._logValue(event, [subject, this._getTime()]);
     }
 
     collect() {
@@ -204,10 +205,13 @@ import httpuseragent from './profiler_source/httpuseragent';
       this._saveStorage();
     }
 
-    _logValue(type, value, time) {
+    _logValue(type, value, size) {
       this.storage.log = this.storage.log || {};
       this.storage.log[type] = this.storage.log[type] || [];
-      this.storage.log[type].push([value, time || this._getTime()]);
+      if (size !== undefined && this.storage.log[type].length == size) {
+        this.storage.log[type].shift();
+      }
+      this.storage.log[type].push(value);
       this._saveStorage();
     }
 
