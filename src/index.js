@@ -10,6 +10,7 @@ import dimension from './profiler_processor/dimension';
 import extreme_geoip from './profiler_processor/extreme_geoip';
 import language_simple from './profiler_processor/language_simple';
 import language_full from './profiler_processor/language_full';
+import map from './profiler_processor/map';
 import pageview from './profiler_processor/pageview';
 import searchquery from './profiler_processor/searchquery';
 import store from './profiler_processor/store';
