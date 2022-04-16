@@ -15,19 +15,19 @@ import pageview from './profiler_processor/pageview';
 import searchquery from './profiler_processor/searchquery';
 import store from './profiler_processor/store';
 import str_contains from './profiler_processor/str_contains';
-import bestpick from './profiler_destination/bestpick';
-import copy from './profiler_destination/copy';
-import condition_copy from './profiler_destination/condition_copy';
-import datalayer_event from './profiler_destination/datalayer_event';
-import formfiller from './profiler_destination/formfiller';
-import officehours from './profiler_destination/officehours';
-import range from './profiler_destination/range';
-import remove from './profiler_destination/remove';
-import season from './profiler_destination/season';
-import set from './profiler_destination/set';
-import threshold from './profiler_destination/threshold';
-import top from './profiler_destination/top';
-import unset from './profiler_destination/unset';
+import bestpick from './profiler_action/bestpick';
+import copy from './profiler_action/copy';
+import condition_copy from './profiler_action/condition_copy';
+import datalayer_event from './profiler_action/datalayer_event';
+import formfiller from './profiler_action/formfiller';
+import officehours from './profiler_action/officehours';
+import range from './profiler_action/range';
+import remove from './profiler_action/remove';
+import season from './profiler_action/season';
+import set from './profiler_action/set';
+import threshold from './profiler_action/threshold';
+import top from './profiler_action/top';
+import unset from './profiler_action/unset';
 import acceptlang from './profiler_source/acceptlang';
 import cookie from './profiler_source/cookie';
 import get from './profiler_source/get';
@@ -49,7 +49,7 @@ import httpuseragent from './profiler_source/httpuseragent';
       window.convivialProfiler = window.convivialProfiler || {};
       this.profilerSource = window.convivialProfiler.profilerSource || {};
       this.profilerProcessor = window.convivialProfiler.profilerProcessor || {};
-      this.profilerDestination = window.convivialProfiler.profilerDestination || {};
+      this.profilerAction = window.convivialProfiler.profilerAction || {};
     }
 
     getClientId() {
@@ -94,8 +94,8 @@ import httpuseragent from './profiler_source/httpuseragent';
         });
         // Call all attached processors.
         this._processValues(profiler, values);
-        // Call all attached destinations.
-        this._destinationValues(profiler, values);
+        // Call all attached actions.
+        this._actionValues(profiler, values);
       });
 
       // Clear expired values.
@@ -123,13 +123,13 @@ import httpuseragent from './profiler_source/httpuseragent';
       });
     }
 
-    _destinationValues(profiler, sourceValues) {
-      // Process attached destinations.
-      profiler.destinations.forEach(destination => {
-        if (this.profilerDestination[destination.type] !== undefined) {
+    _actionValues(profiler, sourceValues) {
+      // Process attached actions.
+      profiler.actions.forEach(action => {
+        if (this.profilerAction[action.type] !== undefined) {
           var values = [];
-          destination.paths.forEach(path => {
-            if (destination.global_storage && destination.global_storage !== undefined) {
+          action.paths.forEach(path => {
+            if (action.global_storage && action.global_storage !== undefined) {
               var value = localStorage.getItem(path);
             } else {
               var value = this._getValue(path);
@@ -140,18 +140,18 @@ import httpuseragent from './profiler_source/httpuseragent';
           });
           // Remove empty and null values and add default value.
           values = values.filter(el => {return el != null && el != '';});
-          if (Array.isArray(values) && values.length === 0 && destination.default_value && destination.default_value !== undefined) {
-            values.push(destination.default_value);
+          if (Array.isArray(values) && values.length === 0 && action.default_value && action.default_value !== undefined) {
+            values.push(action.default_value);
           }
           if (values.length) {
-            this.profilerDestination[destination.type](profiler, destination, sourceValues, values);
+            this.profilerAction[action.type](profiler, action, sourceValues, values);
           }
-          else if (destination.remove_empty && !values.length) {
-            localStorage.removeItem(destination.key);
+          else if (action.remove_empty && !values.length) {
+            localStorage.removeItem(action.key);
           }
         }
         else {
-          console.debug('Invalid profiler destination type "' + destination.type + '".');
+          console.debug('Invalid profiler action type "' + action.type + '".');
         }
       });
     }
