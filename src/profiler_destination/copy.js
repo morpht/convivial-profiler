@@ -9,13 +9,17 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
   window.convivialProfiler.profilerDestination.copy = function (profiler, destination, sourceValues, values) {
+    var result = values[0];
+    if (destination.json_stringify !== undefined && destination.json_stringify) {
+      result = JSON.stringify(result);
+    }
     // Store the value in localstorage if its applicable.
     if (destination.storage.localstorage === 'localstorage') {
-      localStorage.setItem(destination.key, values[0]);
+      localStorage.setItem(destination.key, result);
     }
     // Store the value in cookie if its applicable.
     if (destination.storage.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(destination.key, values[0]);
+      window.convivialProfiler._setCookie(destination.key, result);
     }
   }
 })(window, localStorage);
