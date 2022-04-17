@@ -1,19 +1,19 @@
 /**
  * @file
- * Convivial Profiler library action plugin.
+ * Convivial Profiler library destination plugin.
  *
  * Copyright Morpht Pty Ltd 2020-2022.
  */
 
 (function (window, localStorage) {
   window.convivialProfiler = window.convivialProfiler || {};
-  window.convivialProfiler.profilerAction = window.convivialProfiler.profilerAction || {};
-  window.convivialProfiler.profilerAction.officehours = function (profiler, action, sourceValues, values) {
+  window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
+  window.convivialProfiler.profilerDestination.officehours = function (profiler, destination, sourceValues, values) {
     var today = new Date();
-    var timezoneOffset = action.daylight_saving_offset;
+    var timezoneOffset = destination.daylight_saving_offset;
     // Check if its normal days
-    if (today.getTime() >= Date.parse(action.normal_start) && today.getTime() <= Date.parse(action.normal_end) ) {
-      timezoneOffset = action.normal_offset;
+    if (today.getTime() >= Date.parse(destination.normal_start) && today.getTime() <= Date.parse(destination.normal_end) ) {
+      timezoneOffset = destination.normal_offset;
     }
     var currentUTCDate = new Date(
       today.getUTCFullYear(),
@@ -29,15 +29,15 @@
     var currentOfficeDate = new Date(currentOfficeTime);
     var office_open = 0;
     // Current time should be in between office start and closing time.
-    if (currentOfficeDate.getHours() >= parseInt(action.office_start) && currentOfficeDate.getHours() <= parseInt(action.office_close)) {
+    if (currentOfficeDate.getHours() >= parseInt(destination.office_start) && currentOfficeDate.getHours() <= parseInt(destination.office_close)) {
       office_open = 1;
     }
     // Store the value in localstorage if its applicable.
-    if (action.storage.localstorage === 'localstorage') {
+    if (destination.storage.localstorage === 'localstorage') {
       localStorage.setItem("office_open", office_open);
     }
     // Store the value in cookie if its applicable.
-    if (action.storage.cookie === 'cookie') {
+    if (destination.storage.cookie === 'cookie') {
       window.convivialProfiler._setCookie("office_open", office_open);
     }
   }
