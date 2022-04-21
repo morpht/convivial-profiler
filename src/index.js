@@ -14,6 +14,7 @@ import map from './profiler_processor/map';
 import pageview from './profiler_processor/pageview';
 import searchquery from './profiler_processor/searchquery';
 import store from './profiler_processor/store';
+import temp from './profiler_processor/temp';
 import bestpick from './profiler_destination/bestpick';
 import copy from './profiler_destination/copy';
 import datalayer_event from './profiler_destination/datalayer_event';
@@ -43,6 +44,7 @@ import httpuseragent from './profiler_source/httpuseragent';
       this.licenseKey = licenseKey;
       this.clientId = clientId || this.getClientId();
       this.storage = this._loadStorage();
+      this.storage.temp = {};
 
       window.convivialProfiler = window.convivialProfiler || {};
       this.profilerSource = window.convivialProfiler.profilerSource || {};
@@ -93,7 +95,14 @@ import httpuseragent from './profiler_source/httpuseragent';
         // Call all attached processors.
         this._processValues(profiler, values);
         // Call all attached destinations.
-        this._destinationValues(profiler, values);
+        profiler.destinations.forEach(destination => {
+          if (this.profilerDestination[destination.type] !== undefined) {
+            this.profilerDestination[destination.type](profiler, destination, values);
+          }
+          else {
+            console.debug('Invalid profiler destination type "' + destination.type + '".');
+          }
+        });
       });
 
       // Clear expired values.
@@ -121,45 +130,10 @@ import httpuseragent from './profiler_source/httpuseragent';
       });
     }
 
-    _destinationValues(profiler, sourceValues) {
-      // Process attached destinations.
-      profiler.destinations.forEach(destination => {
-        if (this.profilerDestination[destination.type] !== undefined) {
-          var values = [];
-          destination.paths.forEach(path => {
-            if (destination.global_storage && destination.global_storage !== undefined) {
-              var value = localStorage.getItem(path);
-            } else {
-              var value = this._getValue(path);
-            }
-            if (value !== undefined) {
-              values.push(value);
-            }
-          });
-          // Remove empty and null values and add default value.
-          values = values.filter(el => {return el != null && el != '';});
-          if (Array.isArray(values) && values.length === 0 && destination.default_value && destination.default_value !== undefined) {
-            values.push(destination.default_value);
-          }
-          if (values.length) {
-            this.profilerDestination[destination.type](profiler, destination, sourceValues, values);
-          }
-          else if (destination.remove_empty && !values.length) {
-            localStorage.removeItem(destination.key);
-          }
-        }
-        else {
-          console.debug('Invalid profiler destination type "' + destination.type + '".');
-        }
-      });
-    }
-
     _loadStorage() {
       var storage = JSON.parse(localStorage.getItem('convivial_profiler')) || {};
       // Clear all stored values if client ID was changed.
-      if (this._getConfig('client_cleanup') === true
-          && storage._clientId !== this.clientId
-      ) {
+      if (this._getConfig('client_cleanup') === true && storage._clientId !== this.clientId) {
         localStorage.removeItem('convivial_profiler');
         return {};
       }
