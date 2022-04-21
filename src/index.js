@@ -19,6 +19,7 @@ import bestpick from './profiler_destination/bestpick';
 import copy from './profiler_destination/copy';
 import datalayer_event from './profiler_destination/datalayer_event';
 import formfiller from './profiler_destination/formfiller';
+import formtracker from './profiler_destination/formtracker';
 import officehours from './profiler_destination/officehours';
 import range from './profiler_destination/range';
 import remove from './profiler_destination/remove';
