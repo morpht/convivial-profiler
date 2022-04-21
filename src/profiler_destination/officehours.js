@@ -8,7 +8,7 @@
 (function (window, localStorage) {
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
-  window.convivialProfiler.profilerDestination.officehours = function (profiler, destination, sourceValues, values) {
+  window.convivialProfiler.profilerDestination.officehours = function (profiler, destination, values) {
     var today = new Date();
     var timezoneOffset = destination.daylight_saving_offset;
     // Check if its normal days
@@ -32,13 +32,13 @@
     if (currentOfficeDate.getHours() >= parseInt(destination.office_start) && currentOfficeDate.getHours() <= parseInt(destination.office_close)) {
       office_open = 1;
     }
-    // Store the value in localstorage if its applicable.
-    if (destination.storage.localstorage === 'localstorage') {
-      localStorage.setItem("office_open", office_open);
+    // Store the data in localstorage if its applicable.
+    if (destination.storage_location.localstorage === 'localstorage') {
+      localStorage.setItem(destination.key, office_open);
     }
-    // Store the value in cookie if its applicable.
-    if (destination.storage.cookie === 'cookie') {
-      window.convivialProfiler._setCookie("office_open", office_open);
+    // Store the data in cookie if its applicable.
+    if (destination.storage_location.cookie === 'cookie') {
+      window.convivialProfiler._setCookie(destination.key, office_open);
     }
   }
 })(window, localStorage);
