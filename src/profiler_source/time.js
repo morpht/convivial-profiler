@@ -9,13 +9,13 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
   window.convivialProfiler.profilerSource.time = function (profiler, source, values) {
-    if (source.key === 'hour') {
+    if (source.part === 'hour') {
       values.push(new Date().getHours());
     }
-    else if (source.key === 'minute') {
+    else if (source.part === 'minute') {
       values.push(new Date().getMinutes());
     }
-    else if (source.key === 'second') {
+    else if (source.part === 'second') {
       values.push(new Date().getSeconds());
     }
   }

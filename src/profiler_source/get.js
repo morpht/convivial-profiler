@@ -20,9 +20,9 @@
       }
     };
     xhr.onerror = function () {
-      console.debug('Unable to fetch values of "' + source.url + '".');
+      console.debug('Unable to fetch values of "' + source.resource_url + '".');
     };
-    xhr.open('GET', source.url);
+    xhr.open('GET', source.resource_url);
     xhr.send();
   }
 })(window, XMLHttpRequest, console);

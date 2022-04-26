@@ -20,11 +20,11 @@
         // Process further if the form field element exists in the page.
         if (form.querySelector('input[name="'+ form_field_name +'"]') !== null && storage_field_name !== null) {
           // fetch the data from localstorage if its applicable.
-          if (destination.storage_location.localstorage === 'localstorage') {
+          if (destination.storage_source.localstorage === 'localstorage') {
             form.querySelector('input[name="'+ form_field_name +'"]').value = localStorage.getItem(storage_field_name);
           }
           // fetch the data from cookie if its applicable.
-          if (destination.storage_location.cookie === 'cookie') {
+          if (destination.storage_source.cookie === 'cookie') {
             form.querySelector('input[name="'+ form_field_name +'"]').value = window.convivialProfiler._getCookie(storage_field_name);
           }
         }

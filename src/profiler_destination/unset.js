@@ -9,24 +9,16 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
   window.convivialProfiler.profilerDestination.unset = function (profiler, destination, values) {
-    var paths_values = [];
-    destination.paths.forEach(path => {
-      var value = window.convivialProfiler._getValue(path);
-      if (value !== undefined) {
-        paths_values.push(value);
+    var storage_value = window.convivialProfiler._getValue(destination.storage_key);
+    if (storage_value) {
+      // Unset the data in localstorage if its applicable.
+      if (destination.target_location.localstorage === 'localstorage') {
+        localStorage.setItem(storage_value, '0');
       }
-    });
-    if (paths_values.length) {
-      paths_values.forEach(paths_value => {
-        // Unset the data in localstorage if its applicable.
-        if (destination.storage_location.localstorage === 'localstorage') {
-          localStorage.setItem(paths_value, '0');
-        }
-        // Unset the data in cookie if its applicable.
-        if (destination.storage_location.cookie === 'cookie') {
-          window.convivialProfiler._setCookie(paths_value, '0');
-        }
-      });
+      // Unset the data in cookie if its applicable.
+      if (destination.target_location.cookie === 'cookie') {
+        window.convivialProfiler._setCookie(storage_value, '0');
+      }
     }
   }
 })(window, localStorage);

@@ -11,7 +11,7 @@
   window.convivialProfiler.profilerProcessor.temp = function (profiler, processor, values) {
     // Store values temporarily.
     values.forEach(value => {
-      window.convivialProfiler._setValue('temp', processor.key, {value: value});
+      window.convivialProfiler._setValue('temp', processor.storage_key, {value: value});
     });
   }
 })(window);

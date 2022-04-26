@@ -11,10 +11,10 @@
   window.convivialProfiler.profilerProcessor.dimension = function (profiler, processor, values) {
     values.forEach(value => {
       if (processor.normalize) {
-        window.convivialProfiler._increaseSubValue('dimensions', processor.key, value, 1 / values.length);
+        window.convivialProfiler._increaseSubValue('dimensions', processor.storage_key, value, 1 / values.length);
       }
       else {
-        window.convivialProfiler._increaseSubValue('dimensions', processor.key, value);
+        window.convivialProfiler._increaseSubValue('dimensions', processor.storage_key, value);
       }
     });
   }

@@ -9,7 +9,7 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
   window.convivialProfiler.profilerSource.cookie = function (profiler, source, values) {
-    var value = window.convivialProfiler._getCookie(source.key);
+    var value = window.convivialProfiler._getCookie(source.name);
     if (value !== null) {
       values.push(value);
     }

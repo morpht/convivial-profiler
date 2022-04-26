@@ -9,29 +9,23 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
   window.convivialProfiler.profilerDestination.range = function (profiler, destination, values) {
-    var paths_values = [];
-    destination.paths.forEach(path => {
-      var value = window.convivialProfiler._getValue(path);
-      if (value !== undefined) {
-        paths_values.push(value);
-      }
-    });
-    if (paths_values.length) {
+    var storage_value = window.convivialProfiler._getValue(destination.storage_key);
+    if (storage_value) {
       destination.ranges.forEach(range => {
-        if (paths_values[0] >= range.min && paths_values[0] < range.max) {
+        if (storage_value >= range.min && storage_value < range.max) {
           // Store the data in localstorage if its applicable.
-          if (destination.storage_location.localstorage === 'localstorage') {
-            localStorage.setItem(destination.key, range.key);
+          if (destination.target_location.localstorage === 'localstorage') {
+            localStorage.setItem(destination.target_key, range.key);
           }
           // Store the data in cookie if its applicable.
-          if (destination.storage_location.cookie === 'cookie') {
-            window.convivialProfiler._setCookie(destination.key, range.key);
+          if (destination.target_location.cookie === 'cookie') {
+            window.convivialProfiler._setCookie(destination.target_key, range.key);
           }
         }
       });
     }
-    else if (destination.remove_empty && !paths_values.length) {
-      localStorage.removeItem(destination.key);
+    else if (destination.remove_empty && !storage_value) {
+      localStorage.removeItem(destination.target_key);
     }
   }
 })(window, localStorage);

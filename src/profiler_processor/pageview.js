@@ -10,10 +10,10 @@
   window.convivialProfiler.profilerProcessor = window.convivialProfiler.profilerProcessor || {};
   window.convivialProfiler.profilerProcessor.pageview = function (profiler, processor, values) {
     if (processor.log === true) {
-      window.convivialProfiler._logValue(processor.key, [window.location.href, window.convivialProfiler._getTime()]);
+      window.convivialProfiler._logValue(processor.storage_key, [window.location.href, window.convivialProfiler._getTime()]);
     }
     if (processor.track === true) {
-      window.convivialProfiler._increaseValue('counters', processor.key);
+      window.convivialProfiler._increaseValue('counters', processor.storage_key);
     }
   }
 })(window);

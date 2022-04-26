@@ -10,7 +10,7 @@
   window.convivialProfiler.profilerProcessor = window.convivialProfiler.profilerProcessor || {};
   window.convivialProfiler.profilerProcessor.accumulation = function (profiler, processor, values) {
     values.forEach(value => {
-      window.convivialProfiler._increaseValue('accumulators', processor.key, value);
+      window.convivialProfiler._increaseValue('accumulators', processor.storage_key, value);
     });
   }
 })(window);

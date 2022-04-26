@@ -20,13 +20,19 @@
       }
     }
     function formtrackercallback(event) {
-      var event_value_selector = 'form' + destination.form_selector + ' input[name="'+ destination.field_name +'"]';
+      var field_selector = 'form' + destination.form_selector + ' input[name="'+ destination.field_name +'"]';
+      var event_label = document.querySelector(field_selector).value;
+      if (document.querySelector(field_selector).type === 'radio' || document.querySelector(field_selector).type === 'checkbox') {
+        if (document.querySelector(field_selector + ':checked') != null) {
+          event_label = document.querySelector(field_selector + ':checked').value;
+        }
+      }
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'convivialProfiler.event',
         category: destination.event_category,
         action: destination.event_action,
-        label: document.querySelector(event_value_selector).value,
+        label: event_label,
         value: 1,
       });
     }

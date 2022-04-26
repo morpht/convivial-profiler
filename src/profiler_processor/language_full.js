@@ -14,7 +14,7 @@
       expire = window.convivialProfiler._getTime() - 1;
     }
     values.forEach(value => {
-      window.convivialProfiler._setValue('store', processor.key, {
+      window.convivialProfiler._setValue('store', processor.storage_key, {
         value: value.toLowerCase(),
         expire: expire,
       });

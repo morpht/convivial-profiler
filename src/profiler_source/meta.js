@@ -9,7 +9,7 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerSource = window.convivialProfiler.profilerSource || {};
   window.convivialProfiler.profilerSource.meta = function (profiler, source, values) {
-    var elements = document.querySelectorAll('meta[name="' + source.key + '"]');
+    var elements = document.querySelectorAll('meta[name="' + source.attribute_name + '"]');
     for (var element of elements) {
       values.push(element.getAttribute('content'));
     }
