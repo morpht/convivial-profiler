@@ -33,12 +33,12 @@
       office_open = 1;
     }
     // Store the data in localstorage if its applicable.
-    if (destination.storage_location.localstorage === 'localstorage') {
-      localStorage.setItem(destination.key, office_open);
+    if (destination.target_location.localstorage === 'localstorage') {
+      localStorage.setItem(destination.target_key, office_open);
     }
     // Store the data in cookie if its applicable.
-    if (destination.storage_location.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(destination.key, office_open);
+    if (destination.target_location.cookie === 'cookie') {
+      window.convivialProfiler._setCookie(destination.target_key, office_open);
     }
   }
 })(window, localStorage);

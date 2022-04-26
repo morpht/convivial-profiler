@@ -9,34 +9,30 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
   window.convivialProfiler.profilerDestination.bestpick = function (profiler, destination, values) {
-    var paths_values = [];
-    destination.paths.forEach(path => {
-      if (destination.global_storage && destination.global_storage !== undefined) {
-        var value = localStorage.getItem(path);
-      } else {
-        var value = window.convivialProfiler._getValue(path);
-      }
+    var storage_values = [];
+    destination.storage_keys.forEach(storage_key => {
+      var value = localStorage.getItem(storage_key);
       if (value !== undefined) {
-        paths_values.push(value);
+        storage_values.push(value);
       }
     });
     // Remove empty and null values and add default value.
-    paths_values = paths_values.filter(el => {return el != null && el != '';});
-    if (Array.isArray(paths_values) && paths_values.length === 0 && destination.default_value && destination.default_value !== undefined) {
-      paths_values.push(destination.default_value);
+    storage_values = storage_values.filter(el => {return el != null && el != '';});
+    if (Array.isArray(storage_values) && storage_values.length === 0 && destination.default_value && destination.default_value !== undefined) {
+      storage_values.push(destination.default_value);
     }
-    if (paths_values.length) {
+    if (storage_values.length) {
       // Store the data in localstorage if its applicable.
-      if (destination.storage_location.localstorage === 'localstorage' && paths_values[0]) {
-        localStorage.setItem(destination.key, paths_values[0]);
+      if (destination.target_location.localstorage === 'localstorage' && storage_values[0]) {
+        localStorage.setItem(destination.target_key, storage_values[0]);
       }
       // Store the data in cookie if its applicable.
-      if (destination.storage_location.cookie === 'cookie' && paths_values[0]) {
-        window.convivialProfiler._setCookie(destination.key, paths_values[0]);
+      if (destination.target_location.cookie === 'cookie' && storage_values[0]) {
+        window.convivialProfiler._setCookie(destination.target_key, storage_values[0]);
       }
     }
-    else if (destination.remove_empty && !paths_values.length) {
-      localStorage.removeItem(destination.key);
+    else if (destination.remove_empty && !storage_values.length) {
+      localStorage.removeItem(destination.target_key);
     }
   }
 })(window, localStorage);

@@ -21,15 +21,15 @@
       });
       // Url query params should include whitelisted param and does not have exclude param.
       if (params.includes(processor.query_param) && !params.includes(processor.exclude_param)) {
-        var searchQueryLogs = window.convivialProfiler._getValue('log.' + processor.key) || [];
+        var searchQueryLogs = window.convivialProfiler._getValue('log.' + processor.storage_key) || [];
         // Log and track unique searches.
         if (searchQueryLogs.find(log => log.title === query_param_value) === undefined) {
           if (processor.log === true) {
             // Log recent searches based on the defined size.
-            window.convivialProfiler._logValue(processor.key, {"title":query_param_value, "url":window.location.href}, processor.size);
+            window.convivialProfiler._logValue(processor.storage_key, {"title":query_param_value, "url":window.location.href}, processor.size);
           }
           if (processor.track === true) {
-            window.convivialProfiler._increaseValue('counters', processor.key);
+            window.convivialProfiler._increaseValue('counters', processor.storage_key);
           }
         }
       }

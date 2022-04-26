@@ -9,29 +9,22 @@
   window.convivialProfiler = window.convivialProfiler || {};
   window.convivialProfiler.profilerDestination = window.convivialProfiler.profilerDestination || {};
   window.convivialProfiler.profilerDestination.copy = function (profiler, destination, values) {
-    var paths_values = [];
-    destination.paths.forEach(path => {
-      var value = window.convivialProfiler._getValue(path);
-      if (value !== undefined) {
-        paths_values.push(value);
-      }
-    });
-    if (paths_values.length) {
-      var result = paths_values[0];
-      if (destination.json_stringify !== undefined && destination.json_stringify) {
-        result = JSON.stringify(result);
+    var storage_value = window.convivialProfiler._getValue(destination.storage_key);
+    if (storage_value) {
+      if (destination.stringify !== undefined && destination.stringify) {
+        storage_value = JSON.stringify(storage_value);
       }
       // Store the data in localstorage if its applicable.
-      if (destination.storage_location.localstorage === 'localstorage') {
-        localStorage.setItem(destination.key, result);
+      if (destination.target_location.localstorage === 'localstorage') {
+        localStorage.setItem(destination.target_key, storage_value);
       }
       // Store the data in cookie if its applicable.
-      if (destination.storage_location.cookie === 'cookie') {
-        window.convivialProfiler._setCookie(destination.key, result);
+      if (destination.target_location.cookie === 'cookie') {
+        window.convivialProfiler._setCookie(destination.target_key, storage_value);
       }
     }
-    else if (destination.remove_empty && !paths_values.length) {
-      localStorage.removeItem(destination.key);
+    else if (destination.remove_empty && !storage_value) {
+      localStorage.removeItem(destination.target_key);
     }
   }
 })(window, localStorage);
