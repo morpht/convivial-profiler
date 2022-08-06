@@ -27,10 +27,25 @@
     // 1000 millseconds = 1 second and 1 hour = 3600  seconds
     var currentOfficeTime = currentUTCDate.getTime() + 3600000*timezoneOffset;
     var currentOfficeDate = new Date(currentOfficeTime);
+    var currentOfficeDay = currentOfficeDate.getDay();
     var office_open = 0;
-    // Current time should be in between office start and closing time.
+    // Current time should be in between global office start and closing time.
     if (currentOfficeDate.getHours() >= parseInt(destination.office_start) && currentOfficeDate.getHours() <= parseInt(destination.office_close)) {
       office_open = 1;
+    }
+    // Office times for the current day.
+    if (destination.office_times) {
+      var currentOfficeTimes = destination.office_times.filter(i => currentOfficeDay === i.day);
+      if (currentOfficeTimes && currentOfficeTimes.length > 0) {
+        currentOfficeTimes.forEach(currentOfficeTime => {
+          if (currentOfficeDate.getHours() >= parseInt(currentOfficeTime.start) && currentOfficeDate.getHours() <= parseInt(currentOfficeTime.close)) {
+            office_open = 1;
+          }
+          else {
+            office_open = 0;
+          }
+        });
+      }
     }
     // Store the data in localstorage if its applicable.
     if (destination.target_location.localstorage === 'localstorage') {
