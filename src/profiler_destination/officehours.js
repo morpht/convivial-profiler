@@ -29,11 +29,7 @@
     var currentOfficeDate = new Date(currentOfficeTime);
     var currentOfficeDay = currentOfficeDate.getDay();
     var office_open = 0;
-    // Current time should be in between global office start and closing time.
-    if (currentOfficeDate.getHours() >= parseInt(destination.office_start) && currentOfficeDate.getHours() <= parseInt(destination.office_close)) {
-      office_open = 1;
-    }
-    // Office times for the current day.
+    // Current time should be in between start and closing time of the current day.
     if (destination.office_times) {
       var currentOfficeTimes = destination.office_times.filter(i => currentOfficeDay === i.day);
       if (currentOfficeTimes && currentOfficeTimes.length > 0) {
