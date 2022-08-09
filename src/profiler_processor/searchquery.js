@@ -26,7 +26,7 @@
         if (searchQueryLogs.find(log => log.title === query_param_value) === undefined) {
           if (processor.log === true) {
             // Log recent searches based on the defined size.
-            window.convivialProfiler._logValue(processor.storage_key, {"title":query_param_value, "url":window.location.href}, processor.size);
+            window.convivialProfiler._logValue(processor.storage_key, {"title":query_param_value.split('+').join(' '), "url":window.location.href}, processor.size);
           }
           if (processor.track === true) {
             window.convivialProfiler._increaseValue('counters', processor.storage_key);
