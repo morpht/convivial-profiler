@@ -3,6 +3,8 @@
  * Convivial Profiler library destination plugins.
  */
 
+import { getCookie, setCookie } from "../lib/utility"
+
 function bestpick(profiler, destination, values) {
   var storage_values = [];
   destination.storage_keys.forEach(storage_key => {
@@ -23,7 +25,7 @@ function bestpick(profiler, destination, values) {
     }
     // Store the data in cookie if its applicable.
     if (destination.target_location.cookie === 'cookie' && storage_values[0]) {
-      window.convivialProfiler._setCookie(destination.target_key, storage_values[0]);
+      setCookie(destination.target_key, storage_values[0]);
     }
   }
   else if (destination.remove_empty && !storage_values.length) {
@@ -42,7 +44,7 @@ function copy(profiler, destination, values) {
     }
     // Store the data in cookie if its applicable.
     if (destination.target_location.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(destination.target_key, storage_value);
+      setCookie(destination.target_key, storage_value);
     }
   }
   else if (destination.remove_empty && !storage_value) {
@@ -78,7 +80,7 @@ function formfiller(profiler, destination, values) {
         }
         // fetch the data from cookie if its applicable.
         if (destination.storage_source.cookie === 'cookie') {
-          form.querySelector('input[name="'+ form_field_name +'"]').value = window.convivialProfiler._getCookie(storage_field_name);
+          form.querySelector('input[name="'+ form_field_name +'"]').value = getCookie(storage_field_name);
         }
       }
     });
@@ -154,7 +156,7 @@ function officehours(profiler, destination, values) {
   }
   // Store the data in cookie if its applicable.
   if (destination.target_location.cookie === 'cookie') {
-    window.convivialProfiler._setCookie(destination.target_key, office_open);
+    setCookie(destination.target_key, office_open);
   }
 };
 function range(profiler, destination, values) {
@@ -168,7 +170,7 @@ function range(profiler, destination, values) {
         }
         // Store the data in cookie if its applicable.
         if (destination.target_location.cookie === 'cookie') {
-          window.convivialProfiler._setCookie(destination.target_key, range.key);
+          setCookie(destination.target_key, range.key);
         }
       }
     });
@@ -203,7 +205,7 @@ function remove(profiler, destination, values) {
       }
       // Remove the data from cookie if its applicable.
       if (destination.target_location.cookie === 'cookie') {
-        window.convivialProfiler._setCookie(storage_value, '', 0);
+        setCookie(storage_value, '', 0);
       }
     });
   }
@@ -221,7 +223,7 @@ function season(profiler, destination, values) {
     }
     // Store the data in cookie if its applicable.
     if (destination.target_location.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(destination.target_key, seasons[month]);
+      setCookie(destination.target_key, seasons[month]);
     }
   }
   else if (destination.remove_empty && !storage_value) {
@@ -237,7 +239,7 @@ function set(profiler, destination, values) {
     }
     // Store the data in cookie if its applicable.
     if (destination.target_location.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(storage_value, '1');
+      setCookie(storage_value, '1');
     }
   }
 };
@@ -275,7 +277,7 @@ function top(profiler, destination, values) {
     }
     // Store the data in cookie if its applicable.
     if (destination.target_location.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(destination.target_key, topKey);
+      setCookie(destination.target_key, topKey);
     }
   }
   else if (destination.remove_empty && !dimension_value) {
@@ -291,7 +293,7 @@ function unset(profiler, destination, values) {
     }
     // Unset the data in cookie if its applicable.
     if (destination.target_location.cookie === 'cookie') {
-      window.convivialProfiler._setCookie(storage_value, '0');
+      setCookie(storage_value, '0');
     }
   }
 };

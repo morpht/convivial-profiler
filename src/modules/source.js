@@ -2,6 +2,9 @@
  * @file
  * Convivial Profiler library source plugins.
  */
+
+import { getCookie } from "../lib/utility"
+
 function acceptlang(profiler, source, values) {
   if (navigator.language !== null && navigator.language.includes("-")) {
     values.push(navigator.language);
@@ -11,7 +14,7 @@ function acceptlang(profiler, source, values) {
   }
 };
 function cookie(profiler, source, values) {
-  var value = window.convivialProfiler._getCookie(source.name);
+  var value = getCookie(source.name);
   if (value !== null) {
     values.push(value);
   }

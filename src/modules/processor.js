@@ -2,6 +2,9 @@
  * @file
  * Convivial Profiler library processor plugins.
  */
+
+import { getTime } from "../lib/utility"
+
 function accumulation(profiler, processor, values) {
   values.forEach(value => {
     window.convivialProfiler._increaseValue('accumulators', processor.storage_key, value);
@@ -21,14 +24,14 @@ function extreme_geoip(profiler, processor, values) {
   values.forEach(value => {
     window.convivialProfiler._setValue('fetchers', processor.storage_key, {
       value: value,
-      expire: window.convivialProfiler._getTime() + processor.ttl,
+      expire: getTime() + processor.ttl,
     });
   });
 };
 function language_full(profiler, processor, values) {
-  var expire = window.convivialProfiler._getTime() + processor.ttl;
+  var expire = getTime() + processor.ttl;
   if (processor.ttl !== null && processor.ttl > 0) {
-    expire = window.convivialProfiler._getTime() - 1;
+    expire = getTime() - 1;
   }
   values.forEach(value => {
     window.convivialProfiler._setValue('store', processor.storage_key, {
@@ -38,9 +41,9 @@ function language_full(profiler, processor, values) {
   });
 };
 function language_simple(profiler, processor, values) {
-  var expire = window.convivialProfiler._getTime() + processor.ttl;
+  var expire = getTime() + processor.ttl;
   if (processor.ttl !== null && processor.ttl > 0) {
-    expire = window.convivialProfiler._getTime() - 1;
+    expire = getTime() - 1;
   }
   values.forEach(value => {
     window.convivialProfiler._setValue('store', processor.storage_key, {
@@ -56,26 +59,26 @@ function map(profiler, processor, values) {
       // store the found match.
       window.convivialProfiler._setValue('store', processor.storage_key, {
           value: matches[0].replace(values[0]+'|', ''),
-          expire: window.convivialProfiler._getTime(),
+          expire: getTime(),
         });
     } else {
       // store the fallback value because source mapping does not exist.
       window.convivialProfiler._setValue('store', processor.storage_key, {
         value: processor.fallback_value,
-        expire: window.convivialProfiler._getTime(),
+        expire: getTime(),
       });
     }
   } else {
     // store the default value because source is empty.
     window.convivialProfiler._setValue('store', processor.storage_key, {
       value: processor.default_value,
-      expire: window.convivialProfiler._getTime(),
+      expire: getTime(),
     });
   }
 };
 function pageview(profiler, processor, values) {
   if (processor.log === true) {
-    window.convivialProfiler._logValue(processor.storage_key, [window.location.href, window.convivialProfiler._getTime()]);
+    window.convivialProfiler._logValue(processor.storage_key, [window.location.href, getTime()]);
   }
   if (processor.track === true) {
     window.convivialProfiler._increaseValue('counters', processor.storage_key);
@@ -110,10 +113,10 @@ function searchquery(profiler, processor, values) {
   }
 };
 function store(profiler, processor, values) {
-  var expire = window.convivialProfiler._getTime() + processor.ttl;
+  var expire = getTime() + processor.ttl;
   // Store values permanently.
   if (processor.ttl !== null && processor.ttl < 1) {
-    expire = window.convivialProfiler._getTime() - 1;
+    expire = getTime() - 1;
   }
   values.forEach(value => {
     window.convivialProfiler._setValue('store', processor.storage_key, {

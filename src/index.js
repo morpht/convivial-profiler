@@ -8,6 +8,7 @@
 import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, temp } from "./modules/processor"
 import { bestpick, copy, datalayer_event, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
+import { getCookie, getTime } from "./lib/utility"
 
 class ConvivialProfiler {
 
@@ -60,7 +61,7 @@ class ConvivialProfiler {
   }
 
   getClientId() {
-    var value = this._getCookie('ConvivialProfilerClientId');
+    var value = getCookie('ConvivialProfilerClientId');
     if (value === null) {
       var arr = new Uint8Array(10);
       (window.crypto || window.msCrypto).getRandomValues(arr);
@@ -73,13 +74,8 @@ class ConvivialProfiler {
     return value;
   }
 
-  track(event, subject) {
-    this._increaseValue('counters', event);
-    this._logValue(event, [subject, this._getTime()]);
-  }
-
   collect() {
-    var now = this._getTime();
+    var now = getTime();
     Object.keys(this.config.profilers).forEach(name => {
       var profiler = this.config.profilers[name];
       // Skip not expired deferred profilers.
@@ -197,18 +193,5 @@ class ConvivialProfiler {
     this._saveStorage();
   }
 
-  _getTime() {
-    return Math.round(new Date().getTime() / 1000);
-  }
-
-  _getCookie(name) {
-    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return v ? decodeURIComponent(v[2]) : null;
-  }
-
-  _setCookie(name, value, days) {
-    var expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = name + '=' + encodeURIComponent(value) + ';path=/;expires=' + expires;
-  }
 }
 export default ConvivialProfiler;
