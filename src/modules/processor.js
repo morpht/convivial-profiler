@@ -115,8 +115,9 @@ function searchquery(profiler, processor, values) {
 function store(profiler, processor, values) {
   var expire = getTime() + processor.ttl;
   // Store values permanently.
-  if (processor.ttl !== null && processor.ttl < 1) {
-    expire = getTime() - 1;
+  if (processor.ttl !== null && processor.ttl === -1) {
+    // Store value for 1 year is permanent.
+    expire = getTime() + 365 * 24 * 3600;
   }
   values.forEach(value => {
     window.convivialProfiler._setValue('store', processor.storage_key, {
