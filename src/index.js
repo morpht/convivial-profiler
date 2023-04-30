@@ -8,7 +8,7 @@
 import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, temp } from "./modules/processor"
 import { bestpick, copy, datalayer_event, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
-import { getCookie, getTime } from "./lib/utility"
+import { getCookie, getTime, setCookie } from "./lib/utility"
 
 class ConvivialProfiler {
 
@@ -69,7 +69,7 @@ class ConvivialProfiler {
       for (var i = 0; i < arr.length; i++) {
         value += ('0' + arr[i].toString(16)).substr(-2);
       }
-      this._setCookie('ConvivialProfilerClientId', value, 365);
+      setCookie('ConvivialProfilerClientId', value, 365);
     }
     return value;
   }
