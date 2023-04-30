@@ -63,6 +63,26 @@ function datalayer_event(profiler, destination, values) {
     });
   });
 };
+function flag(profiler, destination, values) {
+  var storage_value = window.convivialProfiler._getValue(destination.storage_key);
+  if (storage_value) {
+    var flag_value = storage_value;
+    if (destination.flag_prefix) {
+      flag_value = destination.flag_prefix + flag_value;
+    }
+    if (destination.flag_suffix) {
+      flag_value = flag_value + destination.flag_suffix;
+    }
+    // Store the data in localstorage if its applicable.
+    if (destination.target_location.localstorage === 'localstorage') {
+      localStorage.setItem(flag_value, flag_value);
+    }
+    // Store the data in cookie if its applicable.
+    if (destination.target_location.cookie === 'cookie') {
+      setCookie(flag_value, flag_value);
+    }
+  }
+};
 function formfiller(profiler, destination, values) {
   var form_selector = 'form' + destination.form_selector;
   var form = document.querySelector(form_selector);
@@ -301,6 +321,7 @@ export {
   bestpick,
   copy,
   datalayer_event,
+  flag,
   formfiller,
   formtracker,
   officehours,

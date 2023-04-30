@@ -6,7 +6,7 @@
  */
 
 import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, temp } from "./modules/processor"
-import { bestpick, copy, datalayer_event, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
+import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
 import { getCookie, getTime, setCookie } from "./lib/utility"
 
@@ -48,6 +48,7 @@ class ConvivialProfiler {
     this.profilerDestination.bestpick = bestpick;
     this.profilerDestination.copy = copy;
     this.profilerDestination.datalayer_event = datalayer_event;
+    this.profilerDestination.flag = flag;
     this.profilerDestination.formfiller = formfiller;
     this.profilerDestination.formtracker = formtracker;
     this.profilerDestination.officehours = officehours;
