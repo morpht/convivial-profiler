@@ -8,7 +8,7 @@
 import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, temp } from "./modules/processor"
 import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
-import { getCookie, getTime, setCookie } from "./lib/utility"
+import { getCookie, getTime, setCookie, getClientId } from "./lib/utility"
 
 class ConvivialProfiler {
 
@@ -17,7 +17,7 @@ class ConvivialProfiler {
     this.config = config;
     this.siteId = siteId;
     this.licenseKey = licenseKey;
-    this.clientId = clientId || this.getClientId();
+    this.clientId = clientId || getClientId();
     this.storage = this._loadStorage();
     this.storage.temp = {};
 
@@ -61,20 +61,6 @@ class ConvivialProfiler {
     this.profilerDestination.unset = unset;
   }
 
-  getClientId() {
-    var value = getCookie('ConvivialProfilerClientId');
-    if (value === null) {
-      var arr = new Uint8Array(10);
-      (window.crypto || window.msCrypto).getRandomValues(arr);
-      value = '';
-      for (var i = 0; i < arr.length; i++) {
-        value += ('0' + arr[i].toString(16)).substr(-2);
-      }
-      setCookie('ConvivialProfilerClientId', value, 365);
-    }
-    return value;
-  }
-
   collect() {
     var now = getTime();
     Object.keys(this.config.profilers).forEach(name => {
@@ -109,7 +95,7 @@ class ConvivialProfiler {
       });
     });
 
-    // Clear expired values.
+    // Clear expired values from store.
     if (this._getValue('store') !== undefined) {
       for (var key in this.storage.store) {
         if (this.storage.store.hasOwnProperty(key)
