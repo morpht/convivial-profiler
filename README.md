@@ -1,5 +1,7 @@
 # convivial-profiler
 
+[![Continous Integration](https://github.com/morpht/convivial-profiler/actions/workflows/main.yml/badge.svg)](https://github.com/morpht/convivial-profiler/actions?query=branch%3Amain)
+
 Provides ability for personalization and visitor data collection. [Read more about it.](https://www.morpht.com/drupal-personalization)
 
 ## Installation
