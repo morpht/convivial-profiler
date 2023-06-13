@@ -1,21 +1,35 @@
-// Test for Convivial Profiler Topic profiler
+// Test for Convivial Profiler Topic bestpick profiler
 
-describe('Topic Profiler: Test 01', () => {
-    it('1. Set the topic metatag to storage dimensions and fire a dataLayer event.'
+describe('Topic bestpick Profiler: Test 01', () => {
+    it('1. Picks the best topic out from topic, topic crm, and topic decision tree.'
         , () => {
+        // open the application.
+        cy.visit(Cypress.env('baseUrl'));
+        cy.getLocalStorage('topic')
+          .then($topic => {
+            expect($topic).to.equal('topic:general')
+          })
         // Open the topic profiler page.
-        cy.visit(Cypress.env('baseUrl') + 'topic.html');
-        cy.getLocalStorage('topic_top')
+        cy.visit(Cypress.env('baseUrl') + 'topic_meta.html');
+        cy.getLocalStorage('topic')
           .then($topic => {
             expect($topic).to.equal('topic:test')
           })
-        // Verify the dataLayer event.
-        cy.window().then((win) => {
-          assert.equal(win.dataLayer[0].action, 'view');
-          assert.equal(win.dataLayer[0].category, 'topic');
-          assert.equal(win.dataLayer[0].event, 'convivialProfiler.event');
-          assert.equal(win.dataLayer[0].label, 'topic:test');
-          assert.equal(win.dataLayer[0].value, 1);
+          // Set the topic CRM cookie.
+        cy.setCookie('convivial_enricher_convivial_demo_topic', 'topic:enricher', {
+          path: '/'
         });
+        // Reload the application.
+        cy.reload(true);
+        cy.getLocalStorage('topic')
+          .then($topic => {
+            expect($topic).to.equal('topic:enricher')
+          })
+        // open the topic parameter page of application.
+        cy.visit(Cypress.env('baseUrl') + '?topic=topic:topic_param');
+        cy.getLocalStorage('topic')
+          .then($topic => {
+            expect($topic).to.equal('topic:topic_param')
+          })          
     })
 });

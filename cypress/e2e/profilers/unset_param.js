@@ -1,6 +1,6 @@
-// Test for Convivial Profiler Unset profiler
+// Test for Convivial Profiler Unset param profiler
 
-describe('Unset Profiler: Test 01', () => {
+describe('Unset param Profiler: Test 01', () => {
     it('1. Checks unset query parameter and unset it from storage.'
         , () => {
         // open the application.

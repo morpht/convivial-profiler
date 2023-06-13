@@ -1,6 +1,6 @@
-// Test for Convivial Profiler UTM medium profiler
+// Test for Convivial Profiler UTM medium param profiler
 
-describe('UTM medium Profiler: Test 01', () => {
+describe('UTM medium param Profiler: Test 01', () => {
     it('1. Checks utm_medium query parameter and saves to storage.'
         , () => {
         // open the application.

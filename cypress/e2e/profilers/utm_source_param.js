@@ -1,6 +1,6 @@
-// Test for Convivial Profiler UTM source profiler
+// Test for Convivial Profiler UTM source param profiler
 
-describe('UTM source Profiler: Test 01', () => {
+describe('UTM source param Profiler: Test 01', () => {
     it('1. Checks utm_source query parameter and saves to storage.'
         , () => {
         // open the application.
