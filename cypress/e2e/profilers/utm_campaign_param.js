@@ -1,6 +1,6 @@
-// Test for Convivial Profiler UTM campaign profiler
+// Test for Convivial Profiler UTM campaign param profiler
 
-describe('UTM campaign Profiler: Test 01', () => {
+describe('UTM campaign param Profiler: Test 01', () => {
     it('1. Checks utm_campaign query parameter and set dataLayer event and saves to storage.'
         , () => {
         // open the application.

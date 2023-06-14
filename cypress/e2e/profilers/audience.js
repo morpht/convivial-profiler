@@ -1,21 +1,29 @@
-// Test for Convivial Profiler Audience profiler
+// Test for Convivial Profiler Audience bestpick profiler
 
-describe('Audience Profiler: Test 01', () => {
-    it('1. Set the audience metatag to storage dimensions and fire a dataLayer event.'
+describe('Audience bestpick Profiler: Test 01', () => {
+    it('1. Picks the best audience out from audience meta and audience crm.'
         , () => {
+        // open the application.
+        cy.visit(Cypress.env('baseUrl'));
+        cy.getLocalStorage('audience')
+          .then($audience => {
+            expect($audience).to.equal('audience:general')
+          })
         // Open the audience profiler page.
-        cy.visit(Cypress.env('baseUrl') + 'audience.html');
-        cy.getLocalStorage('audience_top')
+        cy.visit(Cypress.env('baseUrl') + 'audience_meta.html');
+        cy.getLocalStorage('audience')
           .then($audience => {
             expect($audience).to.equal('audience:test')
           })
-        // Verify the dataLayer event.
-        cy.window().then((win) => {
-          assert.equal(win.dataLayer[0].action, 'view');
-          assert.equal(win.dataLayer[0].category, 'audience');
-          assert.equal(win.dataLayer[0].event, 'convivialProfiler.event');
-          assert.equal(win.dataLayer[0].label, 'audience:test');
-          assert.equal(win.dataLayer[0].value, 1);
+        // Set the audience CRM cookie.
+        cy.setCookie('convivial_enricher_convivial_demo_audience', 'audience:enricher', {
+          path: '/'
         });
+        // Reload the application.
+        cy.reload(true);
+        cy.getLocalStorage('audience')
+          .then($audience => {
+            expect($audience).to.equal('audience:enricher')
+          })
     })
 });

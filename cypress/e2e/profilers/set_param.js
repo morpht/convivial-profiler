@@ -1,6 +1,6 @@
-// Test for Convivial Profiler set profiler
+// Test for Convivial Profiler set param profiler
 
-describe('Set Profiler: Test 01', () => {
+describe('Set param Profiler: Test 01', () => {
     it('1. Checks set query parameter and saves to storage.'
         , () => {
         // open the application.

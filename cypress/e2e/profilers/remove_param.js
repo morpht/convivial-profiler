@@ -1,6 +1,6 @@
-// Test for Convivial Profiler remove profiler
+// Test for Convivial Profiler remove param profiler
 
-describe('Remove Profiler: Test 01', () => {
+describe('Remove param Profiler: Test 01', () => {
     it('1. Checks remove query parameter and remove it from storage.'
         , () => {
         // open the application.
