@@ -129,9 +129,9 @@ function store(profiler, processor, values) {
 function unstore_value(profiler, processor, values) {
   // Remove value from store.
   values.forEach(value => {
-    if (value == window.convivialProfiler._getValue(processor.unstore_key)) {
+    if (value == window.convivialProfiler._getValue('store.' + processor.unstore_key + '.value')) {
       // Remove from the convivial profiler storage.
-      window.convivialProfiler._deleteValue(processor.unstore_key);
+      window.convivialProfiler._deleteValue('store', processor.unstore_key);
       // Store the value into temporary storage to be used by the destination plugins.
       window.convivialProfiler._setValue('temp', processor.storage_key, {value: processor.storage_value});
     }
