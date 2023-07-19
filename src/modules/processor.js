@@ -126,6 +126,17 @@ function store(profiler, processor, values) {
     });
   });
 };
+function unstore_value(profiler, processor, values) {
+  // Remove value from store.
+  values.forEach(value => {
+    if (value == window.convivialProfiler._getValue(processor.unstore_key)) {
+      // Remove from the convivial profiler storage.
+      window.convivialProfiler._deleteValue('store', processor.unstore_key);
+      // Store the value into temporary storage to be used by the destination plugins.
+      window.convivialProfiler._setValue('temp', processor.storage_key, {value: processor.storage_value});
+    }
+  });
+};
 function temp(profiler, processor, values) {
   // Store values temporarily.
   values.forEach(value => {
@@ -142,5 +153,6 @@ export {
   pageview,
   searchquery,
   store,
+  unstore_value,
   temp
 }
