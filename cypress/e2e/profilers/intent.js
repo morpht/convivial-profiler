@@ -13,7 +13,7 @@ describe('Intent bestpick Profiler: Test 01', () => {
         cy.visit(Cypress.env('baseUrl') + 'intent_meta.html');
         cy.getLocalStorage('intent')
           .then($intent => {
-            expect($intent).to.equal('intent:test')
+            expect($intent).to.equal(null)
           })
         // Set the intent CRM cookie.
         cy.setCookie('convivial_enricher_convivial_demo_intent', 'intent:enricher', {

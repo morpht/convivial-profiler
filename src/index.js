@@ -5,10 +5,10 @@
  * Copyright Morpht Pty Ltd 2020-2022.
  */
 
-import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, temp } from "./modules/processor"
+import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, unstore_value, temp } from "./modules/processor"
 import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
-import { getCookie, getTime, setCookie, getClientId } from "./lib/utility"
+import { getTime, getClientId } from "./lib/utility"
 
 class ConvivialProfiler {
 
@@ -42,6 +42,7 @@ class ConvivialProfiler {
     this.profilerProcessor.pageview = pageview;
     this.profilerProcessor.searchquery = searchquery;
     this.profilerProcessor.store = store;
+    this.profilerProcessor.unstore_value = unstore_value;
     this.profilerProcessor.temp = temp;
     // Load all destination plugins.
     this.profilerDestination = {};
@@ -143,6 +144,12 @@ class ConvivialProfiler {
     source = source || this.storage;
     var properties = Array.isArray(path) ? path : path.split('.');
     return properties.reduce((prev, curr) => prev && prev[curr], source);
+  }
+
+  _deleteValue(type, key) {
+    this.storage[type] = this.storage[type] || {};
+    delete this.storage[type][key];
+    this._saveStorage();
   }
 
   _getConfig(path) {
