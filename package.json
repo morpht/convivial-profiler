@@ -1,6 +1,6 @@
 {
   "name": "convivial-profiler",
-  "version": "0.1.32",
+  "version": "0.1.34",
   "description": "Provides ability for personalization and visitor data collection.",
   "main": "index.js",
   "scripts": {
