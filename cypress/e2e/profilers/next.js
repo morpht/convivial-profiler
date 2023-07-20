@@ -19,7 +19,7 @@ describe('Next bestpick Profiler: Test 01', () => {
         cy.visit(Cypress.env('baseUrl') + 'intent_meta.html');
         cy.getLocalStorage('next')
           .then($next => {
-            expect($next).to.equal('intent:test')
+            expect($next).to.equal('campaign1')
           })
         // Set the intent CRM cookie.
         cy.setCookie('convivial_enricher_convivial_demo_intent', 'intent:enricher', {
