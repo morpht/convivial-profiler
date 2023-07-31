@@ -25,5 +25,11 @@ describe('Audience bestpick Profiler: Test 01', () => {
           .then($audience => {
             expect($audience).to.equal('audience:enricher')
           })
+        // Open the audience override page.
+        cy.visit(Cypress.env('baseUrl') + '?audience_override=audience:override');
+        cy.getLocalStorage('audience')
+          .then($audience => {
+            expect($audience).to.equal('audience:override')
+          })
     })
 });
