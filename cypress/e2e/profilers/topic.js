@@ -30,6 +30,12 @@ describe('Topic bestpick Profiler: Test 01', () => {
         cy.getLocalStorage('topic')
           .then($topic => {
             expect($topic).to.equal('topic:topic_param')
-          })          
+          })
+        // Open the topic override page.
+        cy.visit(Cypress.env('baseUrl') + '?topic_override=topic:override');
+        cy.getLocalStorage('topic')
+        .then($topic => {
+          expect($topic).to.equal('topic:override')
+        })
     })
 });

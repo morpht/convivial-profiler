@@ -25,5 +25,11 @@ describe('Campaign bestpick Profiler: Test 01', () => {
           .then($campaign => {
             expect($campaign).to.equal('campaign_enricher')
           })
+        // Open the campaign override page.
+        cy.visit(Cypress.env('baseUrl') + '?campaign_override=campaign:override');
+        cy.getLocalStorage('campaign')
+        .then($campaign => {
+          expect($campaign).to.equal('campaign:override')
+        })
     })
 });

@@ -25,5 +25,11 @@ describe('Intent bestpick Profiler: Test 01', () => {
           .then($intent => {
             expect($intent).to.equal('intent:enricher')
           })
+        // Open the intent override page.
+        cy.visit(Cypress.env('baseUrl') + '?intent_override=intent:override');
+        cy.getLocalStorage('intent')
+        .then($intent => {
+          expect($intent).to.equal('intent:override')
+        })
     })
 });

@@ -9,7 +9,7 @@ window.drupalSettings.convivialProfiler = {
       "set_param": {
         "name": "set_param",
         "label": "Set param",
-        "weight": -17,
+        "weight": -27,
         "status": true,
         "description": "Saves \"set\" query parameter to storage.",
         "deferred": false,
@@ -39,7 +39,7 @@ window.drupalSettings.convivialProfiler = {
       "unset_param": {
         "name": "unset_param",
         "label": "Unset param",
-        "weight": -16,
+        "weight": -26,
         "status": true,
         "description": "Unsets \"unset\" query parameter from storage.",
         "deferred": false,
@@ -69,7 +69,7 @@ window.drupalSettings.convivialProfiler = {
       "remove_param": {
         "name": "remove_param",
         "label": "Remove param",
-        "weight": -15,
+        "weight": -25,
         "status": true,
         "description": "Removes \"remove\" query parameter from storage.",
         "deferred": false,
@@ -104,7 +104,7 @@ window.drupalSettings.convivialProfiler = {
       "utm_campaign_param": {
         "name": "utm_campaign_param",
         "label": "UTM campaign param",
-        "weight": -14,
+        "weight": -24,
         "status": true,
         "description": "Saves \"utm_campaign\" query parameter to storage and set dataLayer event.",
         "deferred": false,
@@ -144,7 +144,7 @@ window.drupalSettings.convivialProfiler = {
       "utm_source_param": {
         "name": "utm_source_param",
         "label": "UTM source param",
-        "weight": -13,
+        "weight": -23,
         "status": true,
         "description": "Saves \"utm_source\" query parameter to storage.",
         "deferred": false,
@@ -177,7 +177,7 @@ window.drupalSettings.convivialProfiler = {
       "utm_medium_param": {
         "name": "utm_medium_param",
         "label": "UTM medium param",
-        "weight": -12,
+        "weight": -22,
         "status": true,
         "description": "Saves \"utm_medium\" query parameter to storage.",
         "deferred": false,
@@ -210,7 +210,7 @@ window.drupalSettings.convivialProfiler = {
       "hour": {
         "name": "hour",
         "label": "Hour",
-        "weight": -11,
+        "weight": -21,
         "status": true,
         "description": "",
         "deferred": false,
@@ -281,7 +281,7 @@ window.drupalSettings.convivialProfiler = {
       "type": {
         "name": "type",
         "label": "Type meta",
-        "weight": -10,
+        "weight": -20,
         "status": true,
         "description": "Saves the \"type\" meta name to storage.",
         "deferred": false,
@@ -320,7 +320,7 @@ window.drupalSettings.convivialProfiler = {
       "audience_meta": {
         "name": "audience_meta",
         "label": "Audiences meta",
-        "weight": -9,
+        "weight": -19,
         "status": true,
         "description": "Saves the \"audiences\" meta names to the audience dimension and calculates audience_top.",
         "deferred": false,
@@ -359,7 +359,7 @@ window.drupalSettings.convivialProfiler = {
       "audience_param": {
         "name": "audience_param",
         "label": "Audience param",
-        "weight": -8,
+        "weight": -18,
         "status": true,
         "description": "Saves the \"audience\" query param to storage.",
         "deferred": false,
@@ -392,7 +392,7 @@ window.drupalSettings.convivialProfiler = {
       "audience_recent": {
         "name": "audience_recent",
         "label": "Audience recent",
-        "weight": -7,
+        "weight": -17,
         "status": true,
         "description": "Saves the \"audience_key\" to storage.",
         "deferred": false,
@@ -425,7 +425,7 @@ window.drupalSettings.convivialProfiler = {
       "audience_crm": {
         "name": "audience_crm",
         "label": "Audience CRM",
-        "weight": -6,
+        "weight": -16,
         "status": true,
         "description": "Saves the \"audience_crm\" to storage.",
         "deferred": false,
@@ -455,10 +455,42 @@ window.drupalSettings.convivialProfiler = {
           }
         ]
       },
+      "audience_override": {
+        "name": "audience_override",
+        "label": "Audience override",
+        "weight": -15,
+        "status": true,
+        "description": "Saves the \"audience_override\" query param to temp storage.",
+        "deferred": false,
+        "sources": [
+          {
+            "type": "query",
+            "param": "audience_override"
+          }
+        ],
+        "processors": [
+          {
+            "type": "temp",
+            "storage_key": "audience_override"
+          }
+        ],
+        "destinations": [
+          {
+            "type": "copy",
+            "target_key": "audience_override",
+            "remove_empty": true,
+            "storage_key": "temp.audience_override.value",
+            "target_location": {
+              "localstorage": "localstorage",
+              "cookie": "0"
+            }
+          }
+        ]
+      },
       "audience": {
         "name": "audience",
         "label": "Audience",
-        "weight": -5,
+        "weight": -14,
         "status": true,
         "description": "Picks the best \"audience\".",
         "deferred": false,
@@ -470,6 +502,7 @@ window.drupalSettings.convivialProfiler = {
             "target_key": "audience",
             "remove_empty": true,
             "storage_keys": [
+              "audience_override",
               "audience_param",
               "audience_crm",
               "audience_recent",
@@ -486,7 +519,7 @@ window.drupalSettings.convivialProfiler = {
       "campaign_param": {
         "name": "campaign_param",
         "label": "Campaign param",
-        "weight": -4,
+        "weight": -13,
         "status": true,
         "description": "Saves the \"campaign\" query param to storage.",
         "deferred": false,
@@ -519,7 +552,7 @@ window.drupalSettings.convivialProfiler = {
       "campaign_crm": {
         "name": "campaign_crm",
         "label": "Campaign CRM",
-        "weight": -3,
+        "weight": -12,
         "status": true,
         "description": "Saves the \"campaign_crm\" to storage.",
         "deferred": false,
@@ -549,10 +582,42 @@ window.drupalSettings.convivialProfiler = {
           }
         ]
       },
+      "campaign_override": {
+        "name": "campaign_override",
+        "label": "Campaign override",
+        "weight": -11,
+        "status": true,
+        "description": "Saves the \"campaign_override\" query param to temp storage.",
+        "deferred": false,
+        "sources": [
+          {
+            "type": "query",
+            "param": "campaign_override"
+          }
+        ],
+        "processors": [
+          {
+            "type": "temp",
+            "storage_key": "campaign_override"
+          }
+        ],
+        "destinations": [
+          {
+            "type": "copy",
+            "target_key": "campaign_override",
+            "remove_empty": true,
+            "storage_key": "temp.campaign_override.value",
+            "target_location": {
+              "localstorage": "localstorage",
+              "cookie": "0"
+            }
+          }
+        ]
+      },
       "campaign": {
         "name": "campaign",
         "label": "Campaign",
-        "weight": -2,
+        "weight": -10,
         "status": true,
         "description": "Picks the best \"campaign\".",
         "deferred": false,
@@ -564,6 +629,7 @@ window.drupalSettings.convivialProfiler = {
             "target_key": "campaign",
             "remove_empty": true,
             "storage_keys": [
+              "campaign_override",
               "campaign_param",
               "campaign_crm",
               "campaign_utm"
@@ -579,7 +645,7 @@ window.drupalSettings.convivialProfiler = {
       "topic_meta": {
         "name": "topic_meta",
         "label": "Topics meta",
-        "weight": -1,
+        "weight": -9,
         "status": true,
         "description": "Saves the \"topics\" meta names to the topic dimension and calculates topic_top.",
         "deferred": false,
@@ -618,7 +684,7 @@ window.drupalSettings.convivialProfiler = {
       "topic_param": {
         "name": "topic_param",
         "label": "Topic param",
-        "weight": 0,
+        "weight": -8,
         "status": true,
         "description": "Saves the \"topic\" query param to storage.",
         "deferred": false,
@@ -651,7 +717,7 @@ window.drupalSettings.convivialProfiler = {
       "topic_recent": {
         "name": "topic_recent",
         "label": "Topic recent",
-        "weight": 1,
+        "weight": -7,
         "status": true,
         "description": "Saves the \"topic_key\" to storage.",
         "deferred": false,
@@ -684,7 +750,7 @@ window.drupalSettings.convivialProfiler = {
       "topic_crm": {
         "name": "topic_crm",
         "label": "Topic CRM",
-        "weight": 2,
+        "weight": -6,
         "status": true,
         "description": "Saves the \"topic_crm\" to storage.",
         "deferred": false,
@@ -714,10 +780,42 @@ window.drupalSettings.convivialProfiler = {
           }
         ]
       },
+      "topic_override": {
+        "name": "topic_override",
+        "label": "Topic override",
+        "weight": -5,
+        "status": true,
+        "description": "Saves the \"topic_override\" query param to temp storage.",
+        "deferred": false,
+        "sources": [
+          {
+            "type": "query",
+            "param": "topic_override"
+          }
+        ],
+        "processors": [
+          {
+            "type": "temp",
+            "storage_key": "topic_override"
+          }
+        ],
+        "destinations": [
+          {
+            "type": "copy",
+            "target_key": "topic_override",
+            "remove_empty": true,
+            "storage_key": "temp.topic_override.value",
+            "target_location": {
+              "localstorage": "localstorage",
+              "cookie": "0"
+            }
+          }
+        ]
+      },
       "topic": {
         "name": "topic",
         "label": "Topic",
-        "weight": 3,
+        "weight": -4,
         "status": true,
         "description": "Picks the best \"topic\".",
         "deferred": false,
@@ -729,6 +827,7 @@ window.drupalSettings.convivialProfiler = {
             "target_key": "topic",
             "remove_empty": true,
             "storage_keys": [
+              "topic_override",
               "topic_param",
               "topic_crm",
               "topic_recent",
@@ -745,7 +844,7 @@ window.drupalSettings.convivialProfiler = {
       "intent_meta": {
         "name": "intent_meta",
         "label": "Intent meta",
-        "weight": 4,
+        "weight": -3,
         "status": true,
         "description": "Saves the \"intent\" meta names to the intent dimension and calculates intent_top.",
         "deferred": false,
@@ -778,7 +877,7 @@ window.drupalSettings.convivialProfiler = {
       "intent_param": {
         "name": "intent_param",
         "label": "Intent param",
-        "weight": 5,
+        "weight": -2,
         "status": true,
         "description": "Saves the \"intent\" query param to storage.",
         "deferred": false,
@@ -811,7 +910,7 @@ window.drupalSettings.convivialProfiler = {
       "intent_recent": {
         "name": "intent_recent",
         "label": "Intent recent",
-        "weight": -7,
+        "weight": -1,
         "status": true,
         "description": "Saves the \"intent_key\" to storage.",
         "deferred": false,
@@ -844,7 +943,7 @@ window.drupalSettings.convivialProfiler = {
       "intent_cookie": {
         "name": "intent_cookie",
         "label": "Intent cookie",
-        "weight": 6,
+        "weight": 0,
         "status": true,
         "description": "Saves the \"intent\" cookie to storage.",
         "deferred": false,
@@ -874,10 +973,42 @@ window.drupalSettings.convivialProfiler = {
           }
         ]
       },
+      "intent_override": {
+        "name": "intent_override",
+        "label": "Intent override",
+        "weight": 1,
+        "status": true,
+        "description": "Saves the \"intent_override\" query param to temp storage.",
+        "deferred": false,
+        "sources": [
+          {
+            "type": "query",
+            "param": "intent_override"
+          }
+        ],
+        "processors": [
+          {
+            "type": "temp",
+            "storage_key": "intent_override"
+          }
+        ],
+        "destinations": [
+          {
+            "type": "copy",
+            "target_key": "intent_override",
+            "remove_empty": true,
+            "storage_key": "temp.intent_override.value",
+            "target_location": {
+              "localstorage": "localstorage",
+              "cookie": "0"
+            }
+          }
+        ]
+      },
       "intent": {
         "name": "intent",
         "label": "Intent",
-        "weight": 7,
+        "weight": 2,
         "status": true,
         "description": "Picks the best \"intent\".",
         "deferred": false,
@@ -889,6 +1020,7 @@ window.drupalSettings.convivialProfiler = {
             "target_key": "intent",
             "remove_empty": true,
             "storage_keys": [
+              "intent_override",
               "intent_param",
               "intent_cookie",
               "intent_recent"
@@ -904,7 +1036,7 @@ window.drupalSettings.convivialProfiler = {
       "intent_satisfied": {
         "name": "intent_satisfied",
         "label": "Intent satisfied meta",
-        "weight": 0,
+        "weight": 3,
         "status": true,
         "description": "Unstores the \"intent_recent\" if there is a match.",
         "deferred": false,
@@ -938,10 +1070,38 @@ window.drupalSettings.convivialProfiler = {
           }
         ]
       },
+      "cta": {
+        "name": "cta",
+        "label": "CTA",
+        "weight": 4,
+        "status": true,
+        "description": "",
+        "deferred": false,
+        "sources": [],
+        "processors": [],
+        "destinations": [
+          {
+            "type": "bestpick",
+            "target_key": "cta",
+            "remove_empty": true,
+            "storage_keys": [
+              "booked",
+              "outcome",
+              "campaign",
+              "audience"
+            ],
+            "default_value": "audience:general",
+            "target_location": {
+              "localstorage": "localstorage",
+              "cookie": "0"
+            }
+          }
+        ]
+      },
       "next": {
         "name": "next",
         "label": "Next",
-        "weight": 8,
+        "weight": 5,
         "status": true,
         "description": "Picks the next best step from intent, and campaign.",
         "deferred": false,
@@ -967,7 +1127,7 @@ window.drupalSettings.convivialProfiler = {
       "lifetime_value_meta": {
         "name": "lifetime_value_meta",
         "label": "Lifetime value meta",
-        "weight": 9,
+        "weight": 6,
         "status": true,
         "description": "Increments lifetime_value from the \"lifetime_value\" meta name.",
         "deferred": false,
@@ -999,7 +1159,7 @@ window.drupalSettings.convivialProfiler = {
       "goal": {
         "name": "goal",
         "label": "Goal",
-        "weight": 10,
+        "weight": 7,
         "status": true,
         "description": "Saves the \"goal\" meta name to storage.",
         "deferred": false,
@@ -1032,7 +1192,7 @@ window.drupalSettings.convivialProfiler = {
       "device_type": {
         "name": "device_type",
         "label": "Device type",
-        "weight": 11,
+        "weight": 8,
         "status": true,
         "description": "Saves the \"device_type\" user agent  to storage.",
         "deferred": false,
@@ -1065,7 +1225,7 @@ window.drupalSettings.convivialProfiler = {
       "location_country": {
         "name": "location_country",
         "label": "Location country",
-        "weight": 12,
+        "weight": 9,
         "status": true,
         "description": "Saves the \"location_country\" cookie to storage.",
         "deferred": false,
@@ -1118,7 +1278,7 @@ window.drupalSettings.convivialProfiler = {
       "location_lat": {
         "name": "location_lat",
         "label": "Location latitude",
-        "weight": 13,
+        "weight": 10,
         "status": true,
         "description": "Saves the \"location_lat\" cookie to storage.",
         "deferred": false,
@@ -1161,7 +1321,7 @@ window.drupalSettings.convivialProfiler = {
       "location_lon": {
         "name": "location_lon",
         "label": "Location longitude",
-        "weight": 14,
+        "weight": 11,
         "status": true,
         "description": "Saves the \"location_lon\" cookie to storage.",
         "deferred": false,
@@ -1194,7 +1354,7 @@ window.drupalSettings.convivialProfiler = {
       "location_city": {
         "name": "location_city",
         "label": "Location city",
-        "weight": 15,
+        "weight": 12,
         "status": true,
         "description": "Saves the \"location_city\" cookie to storage.",
         "deferred": false,
@@ -1227,7 +1387,7 @@ window.drupalSettings.convivialProfiler = {
       "pageview": {
         "name": "pageview",
         "label": "Pageview",
-        "weight": 16,
+        "weight": 13,
         "status": true,
         "description": "Increments the \"pageview\" in storage.",
         "deferred": false,
@@ -1288,7 +1448,7 @@ window.drupalSettings.convivialProfiler = {
       "searchquery": {
         "name": "searchquery",
         "label": "Searchquery",
-        "weight": 17,
+        "weight": 14,
         "status": true,
         "description": "Tracks the searchquery in a log.",
         "deferred": false,
@@ -1322,7 +1482,7 @@ window.drupalSettings.convivialProfiler = {
       "language": {
         "name": "language",
         "label": "Language",
-        "weight": 17,
+        "weight": 15,
         "status": true,
         "description": "Saves the browser \"language\" to storage.",
         "deferred": false,
@@ -1360,7 +1520,7 @@ window.drupalSettings.convivialProfiler = {
       "stage": {
         "name": "stage",
         "label": "Stage",
-        "weight": 17,
+        "weight": 16,
         "status": true,
         "description": "Saves the \"stage\" meta name to the stage dimension and calculates threshold stage.",
         "deferred": false,
@@ -1441,10 +1601,42 @@ window.drupalSettings.convivialProfiler = {
           }
         ]
       },
+      "stage_override": {
+        "name": "stage_override",
+        "label": "Stage override",
+        "weight": 17,
+        "status": true,
+        "description": "Saves the \"stage_override\" query param to temp storage.",
+        "deferred": false,
+        "sources": [
+          {
+            "type": "query",
+            "param": "stage_override"
+          }
+        ],
+        "processors": [
+          {
+            "type": "temp",
+            "storage_key": "stage_override"
+          }
+        ],
+        "destinations": [
+          {
+            "type": "copy",
+            "target_key": "stage",
+            "remove_empty": false,
+            "storage_key": "temp.stage_override.value",
+            "target_location": {
+              "localstorage": "localstorage",
+              "cookie": "0"
+            }
+          }
+        ]
+      },
       "styxkey_recombee_userid": {
         "name": "styxkey_recombee_userid",
         "label": "STYXKEY Recombee UserId",
-        "weight": 17,
+        "weight": 18,
         "status": true,
         "description": "Copy RecombeeUserId cookie to STYXKEY_RecombeeUserId to support cookie reading on pantheon platform",
         "deferred": false,
@@ -1478,7 +1670,7 @@ window.drupalSettings.convivialProfiler = {
       "convivial_enricher_clientid": {
         "name": "convivial_enricher_clientid",
         "label": "Convivial Enricher ClientId",
-        "weight": 17,
+        "weight": 19,
         "status": true,
         "description": "Saves a client ID provided by Enricher.",
         "deferred": false,
@@ -1521,7 +1713,7 @@ window.drupalSettings.convivialProfiler = {
       "newsletter_signup_form": {
         "name": "newsletter_signup_form",
         "label": "Newsletter signup form",
-        "weight": 17,
+        "weight": 20,
         "status": true,
         "description": "Populate the newsletter signup form with hidden variables.",
         "deferred": false,
@@ -1548,7 +1740,7 @@ window.drupalSettings.convivialProfiler = {
       "convivial_enricher_cookies_remove": {
         "name": "convivial_enricher_cookies_remove",
         "label": "Convivial enricher cookies remove",
-        "weight": 17,
+        "weight": 21,
         "status": true,
         "description": "Remove convivial_enricher_convivial_demo_topic, convivial_enricher_convivial_demo_audience, convivial_enricher_convivial_demo_campaign cookies.",
         "deferred": false,
@@ -1577,7 +1769,7 @@ window.drupalSettings.convivialProfiler = {
       "office_hours": {
         "name": "office_hours",
         "label": "Office hours",
-        "weight": 17,
+        "weight": 22,
         "status": true,
         "description": "Calculates whether the office is open based on current time and date.",
         "deferred": false,
@@ -1640,7 +1832,7 @@ window.drupalSettings.convivialProfiler = {
       "page_helpful": {
         "name": "page_helpful",
         "label": "Page helpful",
-        "weight": 17,
+        "weight": 23,
         "status": true,
         "description": "Sends an event on form save to track the satisfaction of the user.",
         "deferred": false,

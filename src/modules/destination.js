@@ -274,8 +274,7 @@ function threshold(profiler, destination, values) {
       }
       // Store the data in cookie if its applicable.
       if (destination.target_location.cookie === 'cookie') {
-        var expires = new Date(Date.now() + 1 * 864e5).toUTCString();
-        document.cookie = destination.target_key + '=' + encodeURIComponent(destination.target_value) + ';path=/;expires=' + expires;
+        setCookie(destination.target_key, destination.target_value);
       }
     }
   }
