@@ -26,9 +26,24 @@ function getClientId() {
   }
   return value;
 };
+function isLocalStorageAvailable() {
+  try {
+    if (typeof localStorage === 'undefined') {
+      return false;
+    }
+    var test = 'test';
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch(e) {
+    console.log('Convivial Profiler will not work because the browser local storage is not enabled or accessible.');
+    return false;
+  }
+}
 export {
   getTime,
   getCookie,
   setCookie,
-  getClientId
+  getClientId,
+  isLocalStorageAvailable
 }

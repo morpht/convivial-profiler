@@ -8,7 +8,7 @@
 import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, unstore_value, temp } from "./modules/processor"
 import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
-import { getTime, getClientId } from "./lib/utility"
+import { getTime, getClientId, isLocalStorageAvailable } from "./lib/utility"
 
 class ConvivialProfiler {
 
@@ -18,6 +18,9 @@ class ConvivialProfiler {
     this.siteId = siteId;
     this.licenseKey = licenseKey;
     this.clientId = clientId || getClientId();
+    if (!isLocalStorageAvailable()) {
+      return;
+    }
     this.storage = this._loadStorage();
     this.storage.temp = {};
 
@@ -63,6 +66,9 @@ class ConvivialProfiler {
   }
 
   collect() {
+    if (!isLocalStorageAvailable()) {
+      return;
+    }
     var now = getTime();
     Object.keys(this.config.profilers).forEach(name => {
       var profiler = this.config.profilers[name];
