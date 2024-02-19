@@ -1,7 +1,7 @@
 // Test for Convivial Profiler with no local storage.
 
 describe('No Local Storage: Test 01', () => {
-  it('1. Read the cypress log when localstorage is disabled.'
+  it('1. Check no error is thrown if the localstorage is disabled.'
       , () => {
       cy.disableLocalStorage();
         // Open the default page.
