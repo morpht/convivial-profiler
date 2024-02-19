@@ -36,7 +36,7 @@ function isLocalStorageAvailable() {
     localStorage.removeItem(test);
     return true;
   } catch(e) {
-    console.error('Convivial Profiler will not work because the browser local storage is not enabled or accessible.');
+    console.log('Convivial Profiler will not work because the browser local storage is not enabled or accessible.');
     return false;
   }
 }
