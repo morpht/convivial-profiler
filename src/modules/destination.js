@@ -303,6 +303,29 @@ function top(profiler, destination, values) {
     localStorage.removeItem(destination.target_key);
   }
 };
+function tops(profiler, destination, values) {
+  var dimension_value = window.convivialProfiler._getValue(destination.dimension_key);
+  if (dimension_value) {
+    var tops = Object.entries(dimension_value)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, destination.length);
+    tops = tops.map(entry => entry[0]);
+  }
+  else if (destination.default_value && !dimension_value) {
+    var tops = destination.default_value;
+  }
+  if (destination.stringify !== undefined && destination.stringify) {
+    tops = JSON.stringify(tops);
+  }
+  // Store the data in localstorage if its applicable.
+  if (destination.target_location.localstorage === 'localstorage') {
+    localStorage.setItem(destination.target_key, tops);
+  }
+  // Store the data in cookie if its applicable.
+  if (destination.target_location.cookie === 'cookie') {
+    setCookie(destination.target_key, tops);
+  }
+};
 function unset(profiler, destination, values) {
   var storage_value = window.convivialProfiler._getValue(destination.storage_key);
   if (storage_value) {
@@ -330,5 +353,6 @@ export {
   set,
   threshold,
   top,
+  tops,
   unset
 }
