@@ -6,7 +6,7 @@
  */
 
 import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, unstore_value, temp } from "./modules/processor"
-import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, tops, unset } from "./modules/destination"
+import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, implode, officehours, range, remove, season, set, threshold, top, tops, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
 import { getTime, getClientId, isLocalStorageAvailable } from "./lib/utility"
 
@@ -55,6 +55,7 @@ class ConvivialProfiler {
     this.profilerDestination.flag = flag;
     this.profilerDestination.formfiller = formfiller;
     this.profilerDestination.formtracker = formtracker;
+    this.profilerDestination.implode = implode;
     this.profilerDestination.officehours = officehours;
     this.profilerDestination.range = range;
     this.profilerDestination.remove = remove;

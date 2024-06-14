@@ -135,6 +135,32 @@ function formtracker(profiler, destination, values) {
     });
   }
 };
+function implode(profiler, destination, values) {
+  var storage_value = '';
+  if (destination.storage_location.localstorage === 'localstorage') {
+    storage_value = localStorage.getItem(destination.storage_key);
+  }
+  if (destination.storage_location.cookie === 'cookie') {
+    storage_value = getCookie(destination.storage_key);
+  }
+  if (storage_value) {
+    storage_value = JSON.parse(storage_value);
+    if (destination.separator !== undefined && destination.separator) {
+      storage_value = storage_value.join(destination.separator);
+    }
+    // Store the data in localstorage if its applicable.
+    if (destination.target_location.localstorage === 'localstorage') {
+      localStorage.setItem(destination.target_key, storage_value);
+    }
+    // Store the data in cookie if its applicable.
+    if (destination.target_location.cookie === 'cookie') {
+      setCookie(destination.target_key, storage_value);
+    }
+  }
+  else if (destination.remove_empty && !storage_value) {
+    localStorage.removeItem(destination.target_key);
+  }
+};
 function officehours(profiler, destination, values) {
   var today = new Date();
   var timezoneOffset = destination.daylight_saving_offset;
@@ -312,7 +338,8 @@ function tops(profiler, destination, values) {
     tops = tops.map(entry => entry[0]);
   }
   else if (destination.default_value && !dimension_value) {
-    var tops = destination.default_value;
+    var default_value = destination.default_value;
+    var tops = default_value.split(",").map(item => item.trim());
   }
   if (destination.stringify !== undefined && destination.stringify) {
     tops = JSON.stringify(tops);
@@ -346,6 +373,7 @@ export {
   flag,
   formfiller,
   formtracker,
+  implode,
   officehours,
   range,
   remove,
