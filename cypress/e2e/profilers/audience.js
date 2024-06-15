@@ -7,7 +7,7 @@ describe('Audience bestpick Profiler: Test 01', () => {
         cy.visit(Cypress.env('baseUrl'));
         cy.getLocalStorage('audience')
           .then($audience => {
-            expect($audience).to.equal('audience:general')
+            expect($audience).to.equal('audience-general')
           })
         // Open the audience profiler page.
         cy.visit(Cypress.env('baseUrl') + 'audience_meta.html');

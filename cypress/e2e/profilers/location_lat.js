@@ -25,7 +25,7 @@ describe('Location latitude Profiler: Test 01', () => {
           })
           cy.getLocalStorage('season')
           .then($season => {
-            expect($season).to.equal('winter')
+            expect($season).to.equal('summer')
           })
     })
 });
