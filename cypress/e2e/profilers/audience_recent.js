@@ -7,7 +7,7 @@ describe('Audience recent Profiler: Test 01', () => {
         cy.visit(Cypress.env('baseUrl') + 'audience_recent.html');
         cy.getLocalStorage('audience_recent')
           .then($audience => {
-            expect($audience).to.equal('audience:test')
+            expect($audience).to.equal('audience-test')
           })
     })
 });

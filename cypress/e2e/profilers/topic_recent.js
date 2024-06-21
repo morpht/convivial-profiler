@@ -7,7 +7,7 @@ describe('Topic recent Profiler: Test 01', () => {
         cy.visit(Cypress.env('baseUrl') + 'topic_recent.html');
         cy.getLocalStorage('topic_recent')
           .then($topic => {
-            expect($topic).to.equal('topic:test')
+            expect($topic).to.equal('topic-test')
           })
     })
 });

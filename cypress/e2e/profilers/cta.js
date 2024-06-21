@@ -5,16 +5,16 @@ describe('CTA bestpick Profiler: Test 01', () => {
       , () => {
       // open the application.
       cy.visit(Cypress.env('baseUrl'));
-      // Default cta should be audience:general
+      // Default cta should be audience-general
       cy.getLocalStorage('cta')
         .then($cta => {
-          expect($cta).to.equal('audience:general')
+          expect($cta).to.equal('audience-general')
         })
       // Open the audience meta page.
       cy.visit(Cypress.env('baseUrl') + 'audience_meta.html');
       cy.getLocalStorage('cta')
         .then($cta => {
-          expect($cta).to.equal('audience:test')
+          expect($cta).to.equal('audience-test')
         })
       // Set the campaign CRM cookie.
       cy.setCookie('convivial_enricher_convivial_demo_campaign', 'campaign_enricher', {

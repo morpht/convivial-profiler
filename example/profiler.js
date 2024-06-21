@@ -508,7 +508,7 @@ window.drupalSettings.convivialProfiler = {
               "audience_recent",
               "audience_top"
             ],
-            "default_value": "audience:general",
+            "default_value": "audience-general",
             "target_location": {
               "localstorage": "localstorage",
               "cookie": "0"
@@ -833,7 +833,7 @@ window.drupalSettings.convivialProfiler = {
               "topic_recent",
               "topic_top"
             ],
-            "default_value": "topic:general",
+            "default_value": "topic-general",
             "target_location": {
               "localstorage": "localstorage",
               "cookie": "0"
@@ -1090,7 +1090,7 @@ window.drupalSettings.convivialProfiler = {
               "campaign",
               "audience"
             ],
-            "default_value": "audience:general",
+            "default_value": "audience-general",
             "target_location": {
               "localstorage": "localstorage",
               "cookie": "0"
@@ -1845,6 +1845,29 @@ window.drupalSettings.convivialProfiler = {
             "field_name": "is_helpful",
             "event_action": "formsubmit",
             "event_category": "page_helpful"
+          }
+        ]
+      },
+      "search_form_recombee_userid_filler": {
+        "name": "search_form_recombee_userid_filler",
+        "label": "Search form recombee user id filler",
+        "weight": 20,
+        "status": true,
+        "description": "Populate the search_form with recombee userid in a hidden variable.",
+        "deferred": false,
+        "sources": [],
+        "processors": [],
+        "destinations": [
+          {
+            "type": "formfiller",
+            "form_selector": ".searchform",
+            "fields_selector": [
+              "RecombeeUserId|RecombeeUserId"
+            ],
+            "storage_source": {
+              "localstorage": "0",
+              "cookie": "cookie"
+            }
           }
         ]
       }

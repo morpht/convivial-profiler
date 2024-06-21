@@ -10,14 +10,14 @@ describe('Topic CRM Profiler: Test 01', () => {
             expect($topic_crm).to.equal(null)
           })
         // Set the topic CRM cookie.
-        cy.setCookie('convivial_enricher_convivial_demo_topic', 'topic:enricher', {
+        cy.setCookie('convivial_enricher_convivial_demo_topic', 'topic-enricher', {
           path: '/'
         });
         // Reload the application.
         cy.reload(true);
         cy.getLocalStorage('topic_crm')
           .then($topic_crm => {
-            expect($topic_crm).to.equal('topic:enricher')
+            expect($topic_crm).to.equal('topic-enricher')
           })
     })
 });
