@@ -7,14 +7,14 @@ describe('Audience meta Profiler: Test 01', () => {
         cy.visit(Cypress.env('baseUrl') + 'audience_meta.html');
         cy.getLocalStorage('audience_top')
           .then($audience => {
-            expect($audience).to.equal('audience:test')
+            expect($audience).to.equal('audience-test')
           })
         // Verify the dataLayer event.
         cy.window().then((win) => {
           assert.equal(win.dataLayer[0].action, 'view');
           assert.equal(win.dataLayer[0].category, 'audience');
           assert.equal(win.dataLayer[0].event, 'convivialProfiler.event');
-          assert.equal(win.dataLayer[0].label, 'audience:test');
+          assert.equal(win.dataLayer[0].label, 'audience-test');
           assert.equal(win.dataLayer[0].value, 1);
         });
     })
