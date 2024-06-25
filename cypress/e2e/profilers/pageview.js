@@ -11,7 +11,7 @@ describe('Page view Profiler: Test 01', () => {
           })
         cy.getLocalStorage('experience')
           .then($experience => {
-            expect($experience).to.equal('experience:none')
+            expect($experience).to.equal('experience-none')
           })
         // Reload the application once.
         cy.reload(true);
@@ -21,7 +21,7 @@ describe('Page view Profiler: Test 01', () => {
           })
         cy.getLocalStorage('experience')
           .then($experience => {
-            expect($experience).to.equal('experience:low')
+            expect($experience).to.equal('experience-low')
           })
         // Reload the application.
         cy.reload(true);
@@ -38,7 +38,7 @@ describe('Page view Profiler: Test 01', () => {
           })
         cy.getLocalStorage('experience')
           .then($experience => {
-            expect($experience).to.equal('experience:medium')
+            expect($experience).to.equal('experience-medium')
           })
         // Reload the application.
         for (var i = 11; i <= 100; i++) {
@@ -50,7 +50,7 @@ describe('Page view Profiler: Test 01', () => {
           })
         cy.getLocalStorage('experience')
           .then($experience => {
-            expect($experience).to.equal('experience:high')
+            expect($experience).to.equal('experience-high')
           })
     })
 });
