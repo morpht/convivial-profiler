@@ -1548,7 +1548,7 @@ window.drupalSettings.convivialProfiler = {
             "type": "threshold",
             "target_key": "stage",
             "target_value": "stage-discovery",
-            "storage_key": "dimensions.stage.stage:orientation",
+            "storage_key": "dimensions.stage.stage-orientation",
             "threshold_number": 1,
             "target_location": {
               "localstorage": "localstorage",
@@ -1559,7 +1559,7 @@ window.drupalSettings.convivialProfiler = {
             "type": "threshold",
             "target_key": "stage",
             "target_value": "stage-validation",
-            "storage_key": "dimensions.stage.stage:discovery",
+            "storage_key": "dimensions.stage.stage-discovery",
             "threshold_number": 2,
             "target_location": {
               "localstorage": "localstorage",
@@ -1570,7 +1570,7 @@ window.drupalSettings.convivialProfiler = {
             "type": "threshold",
             "target_key": "stage",
             "target_value": "stage-conversion",
-            "storage_key": "dimensions.stage.stage:validation",
+            "storage_key": "dimensions.stage.stage-validation",
             "threshold_number": 1,
             "target_location": {
               "localstorage": "localstorage",
@@ -1581,7 +1581,7 @@ window.drupalSettings.convivialProfiler = {
             "type": "threshold",
             "target_key": "stage",
             "target_value": "stage-continue",
-            "storage_key": "dimensions.stage.stage:conversion",
+            "storage_key": "dimensions.stage.stage-conversion",
             "threshold_number": 2,
             "target_location": {
               "localstorage": "localstorage",
@@ -1592,7 +1592,7 @@ window.drupalSettings.convivialProfiler = {
             "type": "threshold",
             "target_key": "stage",
             "target_value": "stage-continue",
-            "storage_key": "dimensions.stage.stage:converted",
+            "storage_key": "dimensions.stage.stage-converted",
             "threshold_number": 1,
             "target_location": {
               "localstorage": "localstorage",
