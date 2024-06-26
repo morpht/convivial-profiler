@@ -1244,11 +1244,11 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "map",
             "storage_key": "location_zone",
-            "default_value": "zone:australia",
-            "fallback_value": "zone:international",
+            "default_value": "zone-australia",
+            "fallback_value": "zone-international",
             "mappings": [
-              "Australia|zone:australia",
-              "AU|zone:australia"
+              "Australia|zone-australia",
+              "AU|zone-australia"
             ]
           }
         ],
