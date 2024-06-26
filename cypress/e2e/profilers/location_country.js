@@ -11,7 +11,7 @@ describe('Location country Profiler: Test 01', () => {
           })
           cy.getLocalStorage('location_zone')
           .then($location_zone => {
-            expect($location_zone).to.equal('zone:australia')
+            expect($location_zone).to.equal('zone-australia')
           })
         // Set the location country cookie.
         cy.setCookie('cp_country', 'IN', {
@@ -25,7 +25,7 @@ describe('Location country Profiler: Test 01', () => {
           })
           cy.getLocalStorage('location_zone')
           .then($location_zone => {
-            expect($location_zone).to.equal('zone:international')
+            expect($location_zone).to.equal('zone-international')
           })
     })
 });

@@ -235,27 +235,27 @@ window.drupalSettings.convivialProfiler = {
             "storage_key": "store.hour.value",
             "ranges": [
               {
-                "key": "daytime:morning",
+                "key": "daytime-morning",
                 "min": 6,
                 "max": 12
               },
               {
-                "key": "daytime:afternoon",
+                "key": "daytime-afternoon",
                 "min": 12,
                 "max": 17
               },
               {
-                "key": "daytime:evening",
+                "key": "daytime-evening",
                 "min": 17,
                 "max": 21
               },
               {
-                "key": "daytime:night",
+                "key": "daytime-night",
                 "min": 0,
                 "max": 6
               },
               {
-                "key": "daytime:night",
+                "key": "daytime-night",
                 "min": 21,
                 "max": 24
               }
@@ -1244,11 +1244,11 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "map",
             "storage_key": "location_zone",
-            "default_value": "zone:australia",
-            "fallback_value": "zone:international",
+            "default_value": "zone-australia",
+            "fallback_value": "zone-international",
             "mappings": [
-              "Australia|zone:australia",
-              "AU|zone:australia"
+              "Australia|zone-australia",
+              "AU|zone-australia"
             ]
           }
         ],
@@ -1418,22 +1418,22 @@ window.drupalSettings.convivialProfiler = {
             "storage_key": "counters.pageview",
             "ranges": [
               {
-                "key": "experience:none",
+                "key": "experience-none",
                 "min": 0,
                 "max": 2
               },
               {
-                "key": "experience:low",
+                "key": "experience-low",
                 "min": 2,
                 "max": 10
               },
               {
-                "key": "experience:medium",
+                "key": "experience-medium",
                 "min": 10,
                 "max": 100
               },
               {
-                "key": "experience:high",
+                "key": "experience-high",
                 "min": 100,
                 "max": 1000000
               }
@@ -1547,8 +1547,8 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "threshold",
             "target_key": "stage",
-            "target_value": "stage:discovery",
-            "storage_key": "dimensions.stage.stage:orientation",
+            "target_value": "stage-discovery",
+            "storage_key": "dimensions.stage.stage-orientation",
             "threshold_number": 1,
             "target_location": {
               "localstorage": "localstorage",
@@ -1558,8 +1558,8 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "threshold",
             "target_key": "stage",
-            "target_value": "stage:validation",
-            "storage_key": "dimensions.stage.stage:discovery",
+            "target_value": "stage-validation",
+            "storage_key": "dimensions.stage.stage-discovery",
             "threshold_number": 2,
             "target_location": {
               "localstorage": "localstorage",
@@ -1569,8 +1569,8 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "threshold",
             "target_key": "stage",
-            "target_value": "stage:conversion",
-            "storage_key": "dimensions.stage.stage:validation",
+            "target_value": "stage-conversion",
+            "storage_key": "dimensions.stage.stage-validation",
             "threshold_number": 1,
             "target_location": {
               "localstorage": "localstorage",
@@ -1580,8 +1580,8 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "threshold",
             "target_key": "stage",
-            "target_value": "stage:continue",
-            "storage_key": "dimensions.stage.stage:conversion",
+            "target_value": "stage-continue",
+            "storage_key": "dimensions.stage.stage-conversion",
             "threshold_number": 2,
             "target_location": {
               "localstorage": "localstorage",
@@ -1591,8 +1591,8 @@ window.drupalSettings.convivialProfiler = {
           {
             "type": "threshold",
             "target_key": "stage",
-            "target_value": "stage:continue",
-            "storage_key": "dimensions.stage.stage:converted",
+            "target_value": "stage-continue",
+            "storage_key": "dimensions.stage.stage-converted",
             "threshold_number": 1,
             "target_location": {
               "localstorage": "localstorage",
@@ -1851,7 +1851,7 @@ window.drupalSettings.convivialProfiler = {
       "search_form_recombee_userid_filler": {
         "name": "search_form_recombee_userid_filler",
         "label": "Search form recombee user id filler",
-        "weight": 20,
+        "weight": 24,
         "status": true,
         "description": "Populate the search_form with recombee userid in a hidden variable.",
         "deferred": false,
