@@ -135,38 +135,6 @@ function formtracker(profiler, destination, values) {
     });
   }
 };
-function implode(profiler, destination, values) {
-  if (destination.storage_location.localstorage === 'localstorage') {
-    var storage_value = localStorage.getItem(destination.storage_key);
-  }
-  if (destination.storage_location.cookie === 'cookie') {
-    var storage_value = getCookie(destination.storage_key);
-  }
-  if (storage_value) {
-    // Parse the storage value to JSON.
-    storage_value = JSON.parse(storage_value);
-    if (typeof storage_value === 'object') {
-      var output = Object.keys(storage_value);
-    }
-    else {
-      var output = storage_value;
-    }
-    if (destination.separator !== undefined && destination.separator) {
-      output = output.join(destination.separator);
-    }
-    // Store the data in localstorage if its applicable.
-    if (destination.target_location.localstorage === 'localstorage') {
-      localStorage.setItem(destination.target_key, output);
-    }
-    // Store the data in cookie if its applicable.
-    if (destination.target_location.cookie === 'cookie') {
-      setCookie(destination.target_key, output);
-    }
-  }
-  else if (destination.remove_empty && !storage_value) {
-    localStorage.removeItem(destination.target_key);
-  }
-};
 function officehours(profiler, destination, values) {
   var today = new Date();
   var timezoneOffset = destination.daylight_saving_offset;
@@ -355,7 +323,6 @@ export {
   flag,
   formfiller,
   formtracker,
-  implode,
   officehours,
   range,
   remove,
