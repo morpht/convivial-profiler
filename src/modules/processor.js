@@ -52,6 +52,13 @@ function language_simple(profiler, processor, values) {
     });
   });
 };
+function logger(profiler, processor, values) {
+  if (values && values.length > 0 && values[0]) {
+    values.forEach(value => {
+      window.convivialProfiler._logValue(processor.storage_key, value, processor.size, true);
+    });
+  }
+};
 function map(profiler, processor, values) {
   if (values && values.length > 0 && values[0] && processor.mappings && processor.mappings.length > 0) {
     var matches = processor.mappings.filter(s => s.includes(values[0]+'|'));
@@ -78,7 +85,7 @@ function map(profiler, processor, values) {
 };
 function pageview(profiler, processor, values) {
   if (processor.log === true) {
-    window.convivialProfiler._logValue(processor.storage_key, [window.location.href, getTime()]);
+    window.convivialProfiler._logValue(processor.storage_key, window.location.href);
   }
   if (processor.track === true) {
     window.convivialProfiler._increaseValue('counters', processor.storage_key);
@@ -149,6 +156,7 @@ export {
   extreme_geoip,
   language_full,
   language_simple,
+  logger,
   map,
   pageview,
   searchquery,

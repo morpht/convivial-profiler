@@ -5,7 +5,7 @@
  * Copyright Morpht Pty Ltd 2020-2022.
  */
 
-import { accumulation, dimension, extreme_geoip, language_simple, language_full, map, pageview, searchquery, store, unstore_value, temp } from "./modules/processor"
+import { accumulation, dimension, extreme_geoip, language_simple, language_full, logger, map, pageview, searchquery, store, unstore_value, temp } from "./modules/processor"
 import { bestpick, copy, datalayer_event, flag, formfiller, formtracker, officehours, range, remove, season, set, threshold, top, unset } from "./modules/destination"
 import { acceptlang, cookie, get, meta, query, time, httpuseragent } from "./modules/source"
 import { getTime, getClientId, isLocalStorageAvailable } from "./lib/utility"
@@ -41,6 +41,7 @@ class ConvivialProfiler {
     this.profilerProcessor.extreme_geoip = extreme_geoip;
     this.profilerProcessor.language_simple = language_simple;
     this.profilerProcessor.language_full = language_full;
+    this.profilerProcessor.logger = logger;
     this.profilerProcessor.map = map;
     this.profilerProcessor.pageview = pageview;
     this.profilerProcessor.searchquery = searchquery;
@@ -183,13 +184,21 @@ class ConvivialProfiler {
     this._saveStorage();
   }
 
-  _logValue(type, value, size) {
+  _logValue(type, value, size, unique = false) {
     this.storage.log = this.storage.log || {};
-    this.storage.log[type] = this.storage.log[type] || [];
-    if (size !== undefined && this.storage.log[type].length == size) {
-      this.storage.log[type].shift();
+    this.storage.log[type] = this.storage.log[type] || {};
+    if (size !== undefined && Object.keys(this.storage.log[type]).length == size) {
+      // Sort the object of objects by timestamp.
+      // Convert the object to an array of [key, value] pairs.
+      var entries = Object.entries(this.storage.log[type]);
+      // Sort the array based on the values (timestamps).
+      entries.sort((a, b) => a[1] - b[1]);
+      entries.shift();
+      // Convert the sorted array back into an object.
+      this.storage.log[type] = Object.fromEntries(entries);
     }
-    this.storage.log[type].push(value);
+    this.storage.log[type][value] = this.storage.log[type][value] || {};
+    this.storage.log[type][value] = getTime();
     this._saveStorage();
   }
 
