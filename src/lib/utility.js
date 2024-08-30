@@ -13,7 +13,15 @@ function setCookie(name, value, days) {
   var expires = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = name + '=' + encodeURIComponent(value) + ';path=/;expires=' + expires;
 };
-function getClientId() {
+function getClientId(cookieconsent) {
+  var userCookieConsent = getCookie('ConvivialProfilerCookieConsent');
+  if (userCookieConsent === null) {
+    // Default Global defined cookieconsent.
+    userCookieConsent = cookieconsent;
+  }
+  userCookieConsent = Number(userCookieConsent);
+  var userCookieConsentValue = userCookieConsent ? 1 : 0;
+  setCookie('ConvivialProfilerCookieConsent', userCookieConsentValue, 365);
   var value = getCookie('ConvivialProfilerClientId');
   if (value === null) {
     var arr = new Uint8Array(10);
@@ -22,7 +30,10 @@ function getClientId() {
     for (var i = 0; i < arr.length; i++) {
       value += ('0' + arr[i].toString(16)).slice(-2);
     }
-    setCookie('ConvivialProfilerClientId', value, 365);
+    // Respect the cookieConsent preference of the user.
+    if (userCookieConsent) {
+      setCookie('ConvivialProfilerClientId', value, 365);
+    }
   }
   return value;
 };
