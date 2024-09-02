@@ -12,12 +12,12 @@ import { getTime, getClientId, isLocalStorageAvailable } from "./lib/utility"
 
 class ConvivialProfiler {
 
-  constructor(config, siteId, licenseKey, clientId) {
+  constructor(config, siteId, licenseKey, clientId, cookieconsent = true) {
     this.version = 1;
     this.config = config;
     this.siteId = siteId;
     this.licenseKey = licenseKey;
-    this.clientId = clientId || getClientId();
+    this.clientId = clientId || getClientId(cookieconsent);
     if (!isLocalStorageAvailable()) {
       return;
     }
