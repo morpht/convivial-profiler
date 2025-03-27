@@ -47,7 +47,10 @@ function httpuseragent(profiler, source, values) {
 function meta(profiler, source, values) {
   var elements = document.querySelectorAll('meta[name="' + source.attribute_name + '"]');
   for (var element of elements) {
-    values.push(element.getAttribute('content'));
+    var content = element.getAttribute('content');
+    if (content) {
+      values.push(content);
+    }
   }
 };
 function query(profiler, source, values) {
