@@ -126,6 +126,6 @@ Removes data from local storage or cookies based on a set of criteria.
 
 ## Copyright and licence
 
-Copyright, Morpht Pty Ltd, 2020 - 2022
+Copyright, Morpht Pty Ltd, 2020 - 2026
 
 The library is available for community use and can be licensed for commercial projects. Licensing and pricing information is available at [Convivial Profiler pricing page](https://www.morpht.com/convivial-profiler-pricing) on the [Morpht website.](https://www.morpht.com)
