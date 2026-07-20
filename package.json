@@ -1,6 +1,6 @@
 {
   "name": "convivial-profiler",
-  "version": "0.1.40",
+  "version": "0.1.42",
   "description": "Provides ability for personalization and visitor data collection.",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,8 @@
     "webpack-dev-server": "^4.15.1"
   },
   "engines": {
-    "npm": ">=10.1.0 <11.0.0",
-    "node": ">=20.9.0 <21.0.0"
+    "npm": ">=10.1.0",
+    "node": ">=20.9.0"
   },
   "browserslist": [
     "> 0.2%",
