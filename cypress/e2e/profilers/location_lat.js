@@ -3,6 +3,8 @@
 describe('Location latitude Profiler: Test 01', () => {
     it('1. Set the location latitude cookie to storage.'
         , () => {
+        // Use April so the northern hemisphere is always in spring.
+        cy.clock(Date.UTC(2026, 3, 15, 12), ['Date']);
         // open the application.
         cy.visit(Cypress.env('baseUrl'));
         cy.getLocalStorage('location_lat')
