@@ -6,12 +6,7 @@
 import { getCookie } from "../lib/utility"
 
 function acceptlang(profiler, source, values) {
-  if (navigator.language !== null && navigator.language.includes("-")) {
-    values.push(navigator.language);
-  }
-  else {
-    values.push("en-AU");
-  }
+  values.push(navigator.language || 'en');
 };
 function cookie(profiler, source, values) {
   var value = getCookie(source.name);

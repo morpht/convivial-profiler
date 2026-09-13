@@ -37,7 +37,7 @@ Adds the current time component (hour, minute, or second) specified in the sourc
 ### Functions Not Using All Parameters
 
 #### `acceptlang(profiler, source, values)` *(Does not use `source`)*
-Adds the browser's language setting to the values array, or defaults to "en-AU" if the browser language is not set or does not include a region.
+Adds the browser's language setting unchanged to the values array, including languages without a region. Defaults to "en" if the browser language is not set or is empty.
 
 ## Processors
 
