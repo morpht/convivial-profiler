@@ -1,0 +1,33 @@
+@startuml
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName sans-serif
+skinparam defaultFontSize 16
+skinparam defaultFontColor #202124
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #53606E
+skinparam ArrowFontSize 14
+skinparam rectangle {
+  BackgroundColor #F7F8FA
+  BorderColor #9DA8B4
+}
+
+rectangle "Browser or page input" as input
+rectangle "Sources" as sources
+rectangle "Collected values[]" as values #EDF4FC
+rectangle "Processors" as processors
+rectangle "Internal state" as state
+rectangle "Destinations" as destinations
+rectangle "Published values,\nforms, dataLayer" as output #EDF4FC
+rectangle "Site integration" as site
+
+input -down-> sources
+sources -down-> values
+values -right-> processors
+processors -right-> state : update
+values -down-> destinations : original values
+state -down-> destinations : processed state
+destinations -down-> output
+output -down-> site
+@enduml

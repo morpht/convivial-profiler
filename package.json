@@ -1,7 +1,7 @@
 {
-  "name": "convivial-profiler",
+  "name": "convivial-personalisation",
   "version": "0.1.43",
-  "description": "Provides ability for personalization and visitor data collection.",
+  "description": "Provides client-side personalisation and visitor data collection.",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",

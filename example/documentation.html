@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Convivial Personalisation documentation example</title>
+    <script src="/dist/bundle.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Choose a topic</h1>
+      <p>This local example collects the topic from the URL.</p>
+      <p>
+        Try <a href="?topic=gardening">gardening</a> or
+        <a href="?topic=walking">walking</a>.
+      </p>
+      <p>Selected topic: <strong id="topic">No topic selected</strong></p>
+      <p>Inspect the <code>docs_topic</code> local-storage key to see the published value.</p>
+    </main>
+    <script>
+      const config = {
+        profilers: {
+          topic_param: {
+            sources: [{ type: 'query', param: 'topic' }],
+            processors: [
+              { type: 'store', storage_key: 'topic_param', ttl: 300 }
+            ],
+            destinations: [
+              {
+                type: 'copy',
+                storage_key: 'store.topic_param.value',
+                target_key: 'docs_topic',
+                target_location: { localstorage: 'localstorage' },
+                remove_empty: true
+              }
+            ]
+          }
+        }
+      };
+
+      window.convivialProfiler = new window.ConvivialProfiler.default(
+        config,
+        'documentation-demo',
+        'community'
+      );
+      window.convivialProfiler.collect();
+
+      try {
+        const topic = localStorage.getItem('docs_topic');
+        document.getElementById('topic').textContent =
+          topic || 'No topic selected';
+      } catch (error) {
+        document.getElementById('topic').textContent =
+          'Browser storage is unavailable';
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName sans-serif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #202124
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam maxMessageSize 150
+skinparam sequence {
+  ArrowColor #53606E
+  LifeLineBorderColor #B8C0CA
+  ParticipantBackgroundColor #F7F8FA
+  ParticipantBorderColor #9DA8B4
+  ParticipantFontSize 15
+  NoteBackgroundColor #EDF4FC
+  NoteBorderColor #9DA8B4
+}
+
+participant "Site code" as Site
+participant "Profiler" as Profiler
+participant "HTTP endpoint" as HTTP
+participant "Processors" as Processors
+participant "Destinations" as Destinations
+
+Site -> Profiler : collect()
+Profiler ->> HTTP : Start GET request
+Profiler -> Processors : Process available values
+Profiler -> Destinations : Use current values\nand state
+Profiler --> Site : Return undefined
+
+... response arrives later ...
+
+HTTP -->> Profiler : JSON response
+Profiler -> Profiler : Parse JSON and\nappend to values[]
+Profiler -> Processors : Run processors again
+note over Destinations
+Not rerun when the
+HTTP response arrives
+end note
+@enduml
